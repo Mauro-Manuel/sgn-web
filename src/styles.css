@@ -503,3 +503,128 @@ input {
         padding-right: 25px;
     }
 }
+
+
+
+/* ========================================
+   ALTERAÇÃO OBRIGATÓRIA DA PALAVRA-PASSE
+======================================== */
+
+.change-password-page {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    background: #f3f5f6;
+}
+
+.change-password-card {
+    width: 100%;
+    max-width: 480px;
+    padding: 42px 38px;
+    border: 1px solid #e5e9ed;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06);
+}
+
+.change-password-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 68px;
+    height: 68px;
+    margin-bottom: 24px;
+    border-radius: 16px;
+    background: #eaf7ee;
+    color: #087a41;
+}
+
+.change-password-header {
+    margin-bottom: 32px;
+}
+
+.change-password-kicker {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #087a41;
+}
+
+.change-password-header h1,
+.change-success h1 {
+    margin: 12px 0;
+    font-size: clamp(25px, 4vw, 32px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+
+.change-password-header p,
+.change-success p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #68717b;
+}
+
+.change-password-toggle {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.change-password-toggle input {
+    width: 16px;
+    height: 16px;
+    accent-color: #087a41;
+}
+
+.change-password-error {
+    margin-bottom: 18px;
+    padding: 12px;
+    border: 1px solid #ffc8ce;
+    border-radius: 6px;
+    background: #fff0f1;
+    color: #b9001a;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.change-password-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 28px;
+    color: #68717b;
+    font-size: 12px;
+}
+
+.change-password-footer svg {
+    color: #087a41;
+    flex-shrink: 0;
+}
+
+.change-success {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .change-password-page {
+        padding: 20px;
+        background: #fff;
+    }
+
+    .change-password-card {
+        padding: 28px 12px;
+        border: none;
+        box-shadow: none;
+    }
+}
