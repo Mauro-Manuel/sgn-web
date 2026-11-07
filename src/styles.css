@@ -1103,3 +1103,909 @@ button:disabled {
         font-size: 20px;
     }
 }
+
+
+/* ========================================
+   SGN - GESTÃO DE UTILIZADORES
+======================================== */
+
+.users-page {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.user-form-heading {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 26px;
+    color: #087a41;
+}
+
+.user-form-heading h2 {
+    margin: 0 0 5px;
+    color: #17211e;
+    font-size: 20px;
+}
+
+.user-form-heading p {
+    margin: 0;
+    font-size: 13px;
+    color: #64726c;
+}
+
+.create-user-form {
+    width: 100%;
+    max-width: 620px;
+}
+
+.create-user-form .field-group select {
+    width: 100%;
+    height: 48px;
+    padding: 0 15px;
+
+    border: 1px solid #cbd3db;
+    border-radius: 6px;
+    background: #fff;
+    color: #18232d;
+    font: inherit;
+    font-size: 13px;
+}
+
+.create-user-form .field-group select:focus {
+    outline: none;
+    border-color: #087a41;
+    box-shadow: 0 0 0 3px #087a4121;
+}
+
+.user-form-help {
+    margin: 0 0 22px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #64726c;
+}
+
+.user-created-success {
+    display: flex;
+    gap: 13px;
+    margin-bottom: 22px;
+    padding: 18px;
+
+    border: 1px solid #b9e4c9;
+    border-radius: 10px;
+    background: #edf8f1;
+    color: #087a41;
+}
+
+.user-created-success svg {
+    flex-shrink: 0;
+}
+
+.user-created-success strong {
+    font-size: 14px;
+}
+
+.user-created-success p {
+    margin: 6px 0;
+    font-size: 13px;
+    color: #225d3f;
+}
+
+.user-created-success small {
+    color: #64726c;
+}
+
+/* SGN - TABELA DE UTILIZADORES */
+
+.users-table-panel {
+  margin-bottom: 24px;
+}
+
+.users-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.users-table-header h2 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+
+.users-table-header p {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.users-refresh-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 13px;
+  border: 1px solid #d9e1e7;
+  border-radius: 8px;
+  background: #fff;
+  color: #334155;
+  cursor: pointer;
+}
+
+.users-refresh-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.users-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.users-table thead {
+  background: #f5f7f9;
+}
+
+.users-table th {
+  padding: 14px 16px;
+  color: #475569;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.users-table td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #edf0f2;
+  color: #334155;
+}
+
+.users-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+.users-role {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #f0f4f6;
+  color: #334155;
+  font-size: 12px;
+}
+
+.users-status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.users-status-active {
+  background: #e8f6ee;
+  color: #087a41;
+}
+
+.users-status-inactive {
+  background: #fcebea;
+  color: #b42318;
+}
+
+.users-table-message,
+.users-table-empty {
+  padding: 36px 16px;
+  text-align: center;
+  color: #64748b;
+}
+
+.users-table-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.users-table-empty p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.users-table-error {
+  padding: 16px;
+  border-radius: 8px;
+  background: #fff1f0;
+  color: #b42318;
+}
+
+.users-table-error button {
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.users-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.users-pagination-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.users-pagination-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 12px;
+  border: 1px solid #d9e1e7;
+  border-radius: 7px;
+  background: white;
+  color: #334155;
+  cursor: pointer;
+}
+
+.users-pagination-actions button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .users-table-header {
+    align-items: flex-start;
+  }
+
+  .users-table th,
+  .users-table td {
+    padding: 12px;
+  }
+
+  .users-pagination {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
+/* SGN - EDIÇÃO DE UTILIZADORES */
+
+.users-edit-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid #d9e1e7;
+  border-radius: 7px;
+  background: #fff;
+  color: #087a41;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.users-edit-button:hover {
+  background: #edf8f1;
+  border-color: #087a41;
+}
+
+.edit-user-panel {
+  margin-top: 24px;
+}
+
+.edit-user-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.edit-user-heading h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+  color: #17211e;
+}
+
+.edit-user-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.edit-user-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid #d9e1e7;
+  border-radius: 7px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.edit-user-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.edit-user-cancel {
+  padding: 12px 18px;
+  border: 1px solid #d9e1e7;
+  border-radius: 7px;
+  background: #fff;
+  color: #475569;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.edit-user-actions .submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .edit-user-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .edit-user-actions button {
+    width: 100%;
+  }
+}
+
+
+
+/* SGN - DESACTIVAÇÃO DE UTILIZADORES */
+
+.users-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.users-deactivate-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid #f3c6c6;
+  border-radius: 7px;
+  background: #fff;
+  color: #b42318;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.users-deactivate-button:hover {
+  background: #fff1f0;
+  border-color: #b42318;
+}
+
+.user-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(15, 23, 42, 0.58);
+}
+
+.user-dialog {
+  width: 100%;
+  max-width: 440px;
+  padding: 26px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.user-dialog-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.user-dialog-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #fff1f0;
+  color: #b42318;
+}
+
+.user-dialog h2 {
+  margin: 0 0 12px;
+  font-size: 21px;
+  color: #17211e;
+}
+
+.user-dialog p {
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.user-dialog-note {
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  font-size: 12px !important;
+}
+
+.user-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.user-deactivate-confirm {
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 7px;
+  background: #b42318;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.user-deactivate-confirm:hover {
+  background: #912018;
+}
+
+.user-deactivate-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .user-dialog {
+    padding: 22px 18px;
+  }
+
+  .user-dialog-actions {
+    flex-direction: column-reverse;
+  }
+
+  .user-dialog-actions button {
+    width: 100%;
+  }
+}
+
+
+/* SGN - ACTIVAR UTILIZADORES */
+
+.users-activate-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid #b9e4c9;
+  border-radius: 7px;
+  background: #fff;
+  color: #087a41;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.users-activate-button:hover {
+  background: #edf8f1;
+  border-color: #087a41;
+}
+
+.user-dialog-activate-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #edf8f1;
+  color: #087a41;
+}
+
+.user-activate-confirm {
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 7px;
+  background: #087a41;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.user-activate-confirm:hover {
+  background: #066233;
+}
+
+.user-activate-confirm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .user-activate-confirm {
+    width: 100%;
+  }
+}
+
+
+/* SGN - REPOSIÇÃO DE PALAVRA-PASSE */
+
+.users-reset-password-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: #fff;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.users-reset-password-button:hover {
+  background: #f1f5f9;
+}
+
+.reset-password-dialog {
+  max-width: 500px;
+}
+
+.reset-password-result {
+  margin-top: 20px;
+  padding: 16px;
+  border: 1px solid #b9e4c9;
+  border-radius: 10px;
+  background: #f0faf4;
+}
+
+.reset-password-result label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #225d3f;
+}
+
+.reset-password-value {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.reset-password-value input {
+  min-width: 0;
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: #fff;
+  color: #17211e;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.reset-password-value button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  border: 1px solid #b9e4c9;
+  border-radius: 7px;
+  background: #fff;
+  color: #087a41;
+  cursor: pointer;
+}
+
+.reset-password-warning {
+  margin-top: 16px;
+  padding: 13px;
+  border-radius: 8px;
+  background: #fff8e5;
+  color: #854d0e !important;
+  font-size: 12px !important;
+}
+
+@media (max-width: 640px) {
+  .reset-password-dialog {
+    padding: 20px;
+  }
+}
+
+
+/* SGN - CONFIGURAÇÕES */
+
+.settings-page {
+  width: 100%;
+}
+
+.settings-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 24px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.settings-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 18px;
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: #64748b;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.settings-tabs button.active {
+  color: #087a41;
+  border-bottom-color: #087a41;
+  font-weight: 600;
+}
+
+.territorial-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.territorial-header h2 {
+  margin: 0 0 7px;
+  font-size: 20px;
+  color: #17211e;
+}
+
+.territorial-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.territorial-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.territorial-filters select {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #334155;
+  font: inherit;
+  font-size: 13px;
+}
+
+.territorial-filters select:focus {
+  outline: 2px solid #087a41;
+  outline-offset: 1px;
+}
+
+.territorial-filters select:disabled {
+  background: #f8fafc;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.territorial-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  padding: 18px;
+  background: #f0f8f3;
+  border: 1px solid #d5ebdc;
+  border-radius: 10px;
+}
+
+.territorial-summary-icon {
+  color: #087a41;
+}
+
+.territorial-summary strong {
+  color: #17211e;
+  font-size: 14px;
+}
+
+.territorial-summary p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.settings-placeholder {
+  padding: 35px 15px;
+  text-align: center;
+  color: #64748b;
+}
+
+.settings-placeholder svg {
+  color: #087a41;
+}
+
+.settings-placeholder h2 {
+  color: #17211e;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .territorial-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-tabs {
+    overflow-x: auto;
+  }
+
+  .settings-tabs button {
+    white-space: nowrap;
+  }
+
+  .territorial-header {
+    flex-direction: column;
+  }
+}
+
+
+/* SGN - CRIAÇÃO DE UNIDADES TERRITORIAIS */
+
+.territorial-create-panel {
+  margin-top: 26px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.territorial-create-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  color: #087a41;
+}
+
+.territorial-create-heading h3 {
+  margin: 0 0 5px;
+  font-size: 18px;
+  color: #17211e;
+}
+
+.territorial-create-heading p {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.territorial-create-form {
+  max-width: 650px;
+}
+
+.territorial-create-form .field-group input,
+.territorial-create-form .field-group select {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  color: #334155;
+  font: inherit;
+  font-size: 13px;
+}
+
+.territorial-create-form .field-group input:focus,
+.territorial-create-form .field-group select:focus {
+  outline: 2px solid #087a41;
+  outline-offset: 1px;
+}
+
+.territorial-parent-info {
+  margin-bottom: 22px;
+  padding: 15px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.territorial-parent-info strong {
+  font-size: 13px;
+  color: #334155;
+}
+
+.territorial-parent-info p {
+  margin: 7px 0 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.territorial-create-form .submit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .territorial-create-form .submit-button {
+    width: 100%;
+  }
+}
+
+/* SGN - LISTAGEM DE UNIDADES ORGANIZACIONAIS */
+
+.organizational-table-panel {
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.organizational-table-panel .users-table-header h3 {
+  margin: 0 0 6px;
+  font-size: 18px;
+  color: #17211e;
+}
+
+.org-unit-uuid {
+  display: inline-block;
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: monospace;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.org-unit-root {
+  color: #64748b;
+  font-size: 12px;
+}
+
+
+.org-territory-name {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 500;
+}
+

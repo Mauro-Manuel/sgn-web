@@ -3,7 +3,7 @@ import type { LoginRequest } from "../types/auth/LoginRequest";
 import type { LoginResponse } from "../types/auth/LoginResponse";
 import type { CsrfToken } from "../types/auth/CsrfToken";
 import type { ChangePasswordRequest } from "../types/auth/ChangePasswordRequest";
-import { AuthenticatedUserResponse } from "../types/AuthenticatedUserResponse";
+import { AuthenticatedUserResponse } from "../types/auth/AuthenticatedUserResponse";
 
 
 const API_BASE_URL = "/api/v1/auth";

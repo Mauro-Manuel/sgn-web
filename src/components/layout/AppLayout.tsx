@@ -1,7 +1,9 @@
+
 import { useState, type ReactNode } from "react";
 import { Bell, Menu, UserCircle2 } from "lucide-react";
 
 import Sidebar from "./Sidebar";
+import type { AppPage } from "./Sidebar";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -9,6 +11,8 @@ interface AppLayoutProps {
   role: string;
   onLogout: () => void;
   isLoggingOut: boolean;
+  activePage: AppPage;
+  onNavigate: (page: AppPage) => void;
 }
 
 export default function AppLayout({
@@ -17,6 +21,8 @@ export default function AppLayout({
   role,
   onLogout,
   isLoggingOut,
+  activePage,
+  onNavigate,
 }: AppLayoutProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -27,6 +33,9 @@ export default function AppLayout({
         onClose={() => setMenuOpen(false)}
         onLogout={onLogout}
         isLoggingOut={isLoggingOut}
+        role={role}
+        activePage={activePage}
+        onNavigate={onNavigate}
       />
 
       <div className="sgn-main-area">
@@ -42,7 +51,10 @@ export default function AppLayout({
           </button>
 
           <div className="sgn-topbar-right">
-            <Bell size={19} aria-label="Notificações" />
+            <Bell
+              size={19}
+              aria-label="Notificações"
+            />
 
             <div className="sgn-user">
               <UserCircle2 size={30} />
@@ -55,7 +67,9 @@ export default function AppLayout({
           </div>
         </header>
 
-        <main className="sgn-dashboard-content">{children}</main>
+        <main className="sgn-dashboard-content">
+          {children}
+        </main>
       </div>
     </div>
   );
