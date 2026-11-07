@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 
 import {
   Eye,
@@ -8,13 +8,15 @@ import {
   ShieldCheck,
   HeartHandshake,
   LockKeyhole,
-  //CheckCircle2,
 } from "lucide-react";
 
 import { authService } from "./services/authService";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import PasswordChangedPage from "./pages/PasswordChangedPage";
-
+import DashboardPage from "./pages/DashboardPage";
+import type { AuthenticatedUserResponse } from "./types/AuthenticatedUserResponse";
+import { useSessionInactivity } from "./hooks/useSessionInactivity";
+import SessionWarning from "./components/session/SessionWarning";
 
 const highlights = [
   { label: "Militantes", Icon: UsersRound },
@@ -42,7 +44,7 @@ function PartyMark() {
 
 export default function App() {
   // ========================================
-  // ESTADOS DO FORMULÁRIO
+  // ESTADOS
   // ========================================
 
   const [username, setUsername] = useState("");
@@ -51,11 +53,83 @@ export default function App() {
   const [rememberMe, setRememberMe] = useState(false);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   const [passwordChangeRequired, setPasswordChangeRequired] = useState(false);
+
   const [passwordChanged, setPasswordChanged] = useState(false);
 
+  const [authenticatedUser, setAuthenticatedUser] =
+    useState<AuthenticatedUserResponse | null>(null);
+
+  const [isValidatingSession, setIsValidatingSession] = useState(false);
+
+  const [isCheckingSession, setIsCheckingSession] = useState(true);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isRenewingSession, setIsRenewingSession] = useState(false);
+
+  const { showWarning, renewActivity } = useSessionInactivity({
+    enabled: authenticatedUser !== null,
+    onExpire: () => {
+        void handleSessionExpired();
+    }
+});
+
   // ========================================
-  // AUTENTICAÇÃO
+  // RECUPERAR SESSÃO APÓS REFRESH
+  // ========================================
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function restoreSession() {
+      const startTime = performance.now();
+      const minimumLoadingTime = 1600;
+
+      try {
+        const user = await authService.getAuthenticatedUser();
+
+        if (cancelled) {
+          return;
+        }
+
+        if (user.passwordChangeRequired) {
+          setAuthenticatedUser(null);
+          setPasswordChangeRequired(true);
+        } else {
+          setPasswordChangeRequired(false);
+          setAuthenticatedUser(user);
+        }
+      } catch {
+        if (cancelled) {
+          return;
+        }
+
+        setAuthenticatedUser(null);
+        setPasswordChangeRequired(false);
+      } finally {
+        const elapsed = performance.now() - startTime;
+
+        const remainingTime = Math.max(0, minimumLoadingTime - elapsed);
+
+        await new Promise<void>((resolve) => {
+          setTimeout(resolve, remainingTime);
+        });
+
+        if (!cancelled) {
+          setIsCheckingSession(false);
+        }
+      }
+    }
+
+    void restoreSession();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // ========================================
+  // LOGIN
   // ========================================
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -77,16 +151,22 @@ export default function App() {
       setPassword("");
 
       if (response.passwordChangeRequired) {
+        setAuthenticatedUser(null);
         setPasswordChangeRequired(true);
         return;
       }
 
-      setMessage(
-        `Autenticação realizada com sucesso. Perfil: ${response.role}`,
-      );
+      const user = await authService.getAuthenticatedUser();
 
-      // Futuramente:
-      // navegar para /dashboard
+      if (user.passwordChangeRequired) {
+        setAuthenticatedUser(null);
+        setPasswordChangeRequired(true);
+        return;
+      }
+
+      setPasswordChangeRequired(false);
+      setPasswordChanged(false);
+      setAuthenticatedUser(user);
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Ocorreu um erro inesperado.";
@@ -98,35 +178,205 @@ export default function App() {
   }
 
   // ========================================
-  // INTERFACE
+  // CONTINUAR APÓS ALTERAÇÃO DA PALAVRA-PASSE
   // ========================================
 
+  async function handlePasswordChangedContinue() {
+    if (isValidatingSession) {
+      return;
+    }
 
-if (passwordChanged) {
+    setIsValidatingSession(true);
+    setMessage("");
+
+    try {
+      const user = await authService.getAuthenticatedUser();
+
+      if (user.passwordChangeRequired) {
+        setPasswordChanged(false);
+        setPasswordChangeRequired(true);
+        setAuthenticatedUser(null);
+        return;
+      }
+
+      setPasswordChanged(false);
+      setPasswordChangeRequired(false);
+      setAuthenticatedUser(user);
+    } catch {
+      setPasswordChanged(false);
+      setPasswordChangeRequired(false);
+      setAuthenticatedUser(null);
+
+      setMessage(
+        "Não foi possível confirmar a sessão. " + "Autentica-te novamente.",
+      );
+    } finally {
+      setIsValidatingSession(false);
+    }
+  }
+
+  async function handleLogout() {
+    if (isLoggingOut) {
+      return;
+    }
+
+    setIsLoggingOut(true);
+    setMessage("");
+
+    try {
+      await authService.logout();
+
+      // Logout confirmado pelo backend.
+      setAuthenticatedUser(null);
+      setPasswordChangeRequired(false);
+      setPasswordChanged(false);
+
+      setUsername("");
+      setPassword("");
+      setRememberMe(false);
+
+      setMessage("Sessão terminada com sucesso.");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "Não foi possível terminar a sessão.";
+
+      // Não simular um Logout quando a API falha.
+      setMessage(errorMessage);
+    } finally {
+      setIsLoggingOut(false);
+    }
+  }
+
+  async function handleContinueSession() {
+    if (isRenewingSession) {
+        return;
+    }
+
+    setIsRenewingSession(true);
+
+    try {
+        const user = await authService.getAuthenticatedUser();
+
+        if (user.passwordChangeRequired) {
+            setAuthenticatedUser(null);
+            setPasswordChangeRequired(true);
+            return;
+        }
+
+        setAuthenticatedUser(user);
+        renewActivity();
+
+    } catch {
+        setAuthenticatedUser(null);
+        setMessage(
+            "Não foi possível confirmar a sessão. " +
+            "Autentica-te novamente."
+        );
+
+    } finally {
+        setIsRenewingSession(false);
+    }
+}
+
+  // ========================================
+  // CONTROLO DAS PÁGINAS
+  // ========================================
+
+  if (isCheckingSession) {
     return (
-        <PasswordChangedPage
-            onContinue={() => {
-                setPasswordChanged(false);
-                setPasswordChangeRequired(false);
-                setMessage(
-                    "Palavra-passe alterada com sucesso."
-                );
-            }}
-        />
+      <main className="session-loading" role="status" aria-live="polite">
+        <div className="session-loading-spinner" />
+
+        <h2>SGN</h2>
+
+        <p>A verificar sessão...</p>
+      </main>
+    );
+  }
+
+  if (passwordChanged) {
+    return (
+      <PasswordChangedPage
+        onContinue={() => {
+          void handlePasswordChangedContinue();
+        }}
+        isLoading={isValidatingSession}
+      />
+    );
+  }
+
+  if (passwordChangeRequired) {
+    return (
+      <ChangePasswordPage
+        onPasswordChanged={() => {
+          setPasswordChangeRequired(false);
+          setPasswordChanged(true);
+        }}
+      />
+    );
+  }
+
+
+if (authenticatedUser !== null) {
+    return (
+        <>
+            <DashboardPage
+                name={authenticatedUser.name}
+                role={authenticatedUser.role}
+                onLogout={() => {
+                    void handleLogout();
+                }}
+                isLoggingOut={isLoggingOut}
+            />
+
+            {showWarning && (
+                <SessionWarning
+                    isLoading={isRenewingSession}
+                    onContinue={() => {
+                        void handleContinueSession();
+                    }}
+                />
+            )}
+
+            {message && (
+                <p className="dashboard-error" role="alert">
+                    {message}
+                </p>
+            )}
+        </>
     );
 }
 
-if (passwordChangeRequired) {
-    return (
-        <ChangePasswordPage
-            onPasswordChanged={() => {
-                setPasswordChangeRequired(false);
-                setPasswordChanged(true);
-            }}
-        />
-    );
+
+
+  
+async function handleSessionExpired() {
+    try {
+        await authService.logout();
+    } catch {
+        // A sessão pode já ter expirado no servidor.
+        // Não assumimos que o logout remoto teve sucesso.
+    } finally {
+        setAuthenticatedUser(null);
+        setPasswordChangeRequired(false);
+        setPasswordChanged(false);
+        setPassword("");
+
+        setMessage(
+            "A sessão expirou por inactividade. " +
+            "Autentica-te novamente."
+        );
+    }
 }
 
+
+
+
+  // ========================================
+  // PÁGINA DE LOGIN
+  // ========================================
 
   return (
     <main className="login-page">

@@ -3,6 +3,8 @@ import type { LoginRequest } from "../types/auth/LoginRequest";
 import type { LoginResponse } from "../types/auth/LoginResponse";
 import type { CsrfToken } from "../types/auth/CsrfToken";
 import type { ChangePasswordRequest } from "../types/auth/ChangePasswordRequest";
+import { AuthenticatedUserResponse } from "../types/AuthenticatedUserResponse";
+
 
 const API_BASE_URL = "/api/v1/auth";
 
@@ -146,10 +148,59 @@ async function changePassword(
 }
 
 
+
+async function getAuthenticatedUser(): Promise<AuthenticatedUserResponse> {
+    const response = await fetch(`${API_BASE_URL}/me`, {
+        method: "GET",
+        credentials: "include",
+        cache: "no-store"
+    });
+
+    if (!response.ok) {
+        throw new Error(
+            "Não foi possível confirmar a sessão autenticada."
+        );
+    }
+
+    return response.json() as Promise<AuthenticatedUserResponse>;
+}
+
+
+async function logout(): Promise<void> {
+    const csrf = await getCsrfToken();
+
+    const xsrfToken = getCookie("XSRF-TOKEN");
+
+    if (!xsrfToken) {
+        throw new Error(
+            "Token CSRF indisponível. Não foi possível terminar a sessão."
+        );
+    }
+
+    const response = await fetch(`${API_BASE_URL}/logout`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            [csrf.headerName]: xsrfToken
+        }
+    });
+
+    if (response.status !== 204) {
+        throw new Error(
+            `Não foi possível terminar a sessão. HTTP ${response.status}`
+        );
+    }
+}
+
+
+
+
 export const authService = {
     getCsrfToken,
     login,
-    changePassword
+    changePassword,
+    getAuthenticatedUser,
+    logout
 };
 
 
