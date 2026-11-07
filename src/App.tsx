@@ -14,7 +14,7 @@ import { authService } from "./services/authService";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import PasswordChangedPage from "./pages/PasswordChangedPage";
 import DashboardPage from "./pages/DashboardPage";
-import type { AuthenticatedUserResponse } from "./types/AuthenticatedUserResponse";
+import type { AuthenticatedUserResponse } from "./types/auth/AuthenticatedUserResponse";
 import { useSessionInactivity } from "./hooks/useSessionInactivity";
 import SessionWarning from "./components/session/SessionWarning";
 
