@@ -15,6 +15,8 @@ import ChangePasswordPage from "./pages/ChangePasswordPage";
 import PasswordChangedPage from "./pages/PasswordChangedPage";
 import DashboardPage from "./pages/DashboardPage";
 import type { AuthenticatedUserResponse } from "./types/AuthenticatedUserResponse";
+import { useSessionInactivity } from "./hooks/useSessionInactivity";
+import SessionWarning from "./components/session/SessionWarning";
 
 const highlights = [
   { label: "Militantes", Icon: UsersRound },
@@ -63,6 +65,14 @@ export default function App() {
 
   const [isCheckingSession, setIsCheckingSession] = useState(true);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isRenewingSession, setIsRenewingSession] = useState(false);
+
+  const { showWarning, renewActivity } = useSessionInactivity({
+    enabled: authenticatedUser !== null,
+    onExpire: () => {
+        void handleSessionExpired();
+    }
+});
 
   // ========================================
   // RECUPERAR SESSÃO APÓS REFRESH
@@ -239,6 +249,37 @@ export default function App() {
     }
   }
 
+  async function handleContinueSession() {
+    if (isRenewingSession) {
+        return;
+    }
+
+    setIsRenewingSession(true);
+
+    try {
+        const user = await authService.getAuthenticatedUser();
+
+        if (user.passwordChangeRequired) {
+            setAuthenticatedUser(null);
+            setPasswordChangeRequired(true);
+            return;
+        }
+
+        setAuthenticatedUser(user);
+        renewActivity();
+
+    } catch {
+        setAuthenticatedUser(null);
+        setMessage(
+            "Não foi possível confirmar a sessão. " +
+            "Autentica-te novamente."
+        );
+
+    } finally {
+        setIsRenewingSession(false);
+    }
+}
+
   // ========================================
   // CONTROLO DAS PÁGINAS
   // ========================================
@@ -277,26 +318,61 @@ export default function App() {
     );
   }
 
-  if (authenticatedUser !== null) {
-    return (
-      <>
-        {message && (
-          <p className="dashboard-error" role="alert">
-            {message}
-          </p>
-        )}
 
-        <DashboardPage
-          name={authenticatedUser.name}
-          role={authenticatedUser.role}
-          onLogout={() => {
-            void handleLogout();
-          }}
-          isLoggingOut={isLoggingOut}
-        />
-      </>
+if (authenticatedUser !== null) {
+    return (
+        <>
+            <DashboardPage
+                name={authenticatedUser.name}
+                role={authenticatedUser.role}
+                onLogout={() => {
+                    void handleLogout();
+                }}
+                isLoggingOut={isLoggingOut}
+            />
+
+            {showWarning && (
+                <SessionWarning
+                    isLoading={isRenewingSession}
+                    onContinue={() => {
+                        void handleContinueSession();
+                    }}
+                />
+            )}
+
+            {message && (
+                <p className="dashboard-error" role="alert">
+                    {message}
+                </p>
+            )}
+        </>
     );
-  }
+}
+
+
+
+  
+async function handleSessionExpired() {
+    try {
+        await authService.logout();
+    } catch {
+        // A sessão pode já ter expirado no servidor.
+        // Não assumimos que o logout remoto teve sucesso.
+    } finally {
+        setAuthenticatedUser(null);
+        setPasswordChangeRequired(false);
+        setPasswordChanged(false);
+        setPassword("");
+
+        setMessage(
+            "A sessão expirou por inactividade. " +
+            "Autentica-te novamente."
+        );
+    }
+}
+
+
+
 
   // ========================================
   // PÁGINA DE LOGIN

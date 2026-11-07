@@ -1022,3 +1022,84 @@ button:disabled {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
+
+/* ========================================
+   SGN - AVISO DE EXPIRAÇÃO DA SESSÃO
+======================================== */
+
+.session-warning-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+    background: rgba(10, 18, 15, 0.65);
+    backdrop-filter: blur(4px);
+}
+
+.session-warning-modal {
+    width: 100%;
+    max-width: 440px;
+    padding: 36px;
+
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.session-warning-icon {
+    display: grid;
+    place-items: center;
+
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 22px;
+
+    border-radius: 16px;
+    background: #fff0f1;
+    color: #c8102e;
+}
+
+.session-warning-modal h2 {
+    margin: 0 0 14px;
+    font-size: 22px;
+    font-weight: 800;
+    color: #17211e;
+}
+
+.session-warning-modal p {
+    margin: 0 0 22px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #64726c;
+}
+
+.session-warning-time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    margin-bottom: 26px;
+    padding: 12px;
+
+    border-radius: 8px;
+    background: #f5f7f8;
+    color: #47554e;
+    font-size: 12px;
+}
+
+@media (max-width: 600px) {
+    .session-warning-modal {
+        padding: 28px 22px;
+    }
+
+    .session-warning-modal h2 {
+        font-size: 20px;
+    }
+}
