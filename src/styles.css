@@ -2391,3 +2391,20 @@ button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+
+/* SGN - Alinhamento da Gestão de Utilizadores
+   Igual à página de Gestão de Núcleos */
+
+.users-page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.users-page .users-table-card,
+.users-page .dashboard-panel {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}

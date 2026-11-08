@@ -1,4 +1,3 @@
-
 import { useEffect, useState, type FormEvent } from "react";
 import { Save } from "lucide-react";
 
@@ -6,12 +5,9 @@ import { organizationalUnitService } from "../../services/organizationalUnitServ
 import { territorialUnitService } from "../../services/territorialUnitService";
 
 import type { TerritorialUnit } from "../../types/territorial/TerritorialUnit";
+import type { OrganizationalUnit } from "../../types/organizational/OrganizationalUnit";
 
-type TerritoryChoice =
-  | "NATIONAL"
-  | "PROVINCIAL"
-  | "MUNICIPAL"
-  | "COMMUNAL";
+type TerritoryChoice = "NATIONAL" | "PROVINCIAL" | "MUNICIPAL" | "COMMUNAL";
 
 interface OrganizationalUnitFormProps {
   onCreated: () => void;
@@ -30,8 +26,7 @@ export default function OrganizationalUnitForm({
 
   const [nationals, setNationals] = useState<TerritorialUnit[]>([]);
   const [provinces, setProvinces] = useState<TerritorialUnit[]>([]);
-  const [municipalities, setMunicipalities] =
-    useState<TerritorialUnit[]>([]);
+  const [municipalities, setMunicipalities] = useState<TerritorialUnit[]>([]);
   const [communes, setCommunes] = useState<TerritorialUnit[]>([]);
 
   const [nationalId, setNationalId] = useState("");
@@ -42,6 +37,17 @@ export default function OrganizationalUnitForm({
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+
+  const [organizationalUnits, setOrganizationalUnits] = useState<
+    OrganizationalUnit[]
+  >([]);
+
+  const [isLoadingParents, setIsLoadingParents] = useState(false);
+
+  const [parentLoadError, setParentLoadError] = useState("");
+
+  const [parentPage, setParentPage] = useState(0);
+  const [hasMoreParents, setHasMoreParents] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -65,7 +71,7 @@ export default function OrganizationalUnitForm({
           setError(
             err instanceof Error
               ? err.message
-              : "Erro ao carregar unidades territoriais."
+              : "Erro ao carregar unidades territoriais.",
           );
         }
       } finally {
@@ -95,7 +101,7 @@ export default function OrganizationalUnitForm({
         if (!cancelled) {
           setMunicipalities([]);
           setError(
-            err instanceof Error ? err.message : "Erro ao carregar municípios."
+            err instanceof Error ? err.message : "Erro ao carregar municípios.",
           );
         }
       }
@@ -115,15 +121,14 @@ export default function OrganizationalUnitForm({
 
     async function loadCommunes() {
       try {
-        const result =
-          await territorialUnitService.getCommunes(municipalityId);
+        const result = await territorialUnitService.getCommunes(municipalityId);
 
         if (!cancelled) setCommunes(result);
       } catch (err) {
         if (!cancelled) {
           setCommunes([]);
           setError(
-            err instanceof Error ? err.message : "Erro ao carregar comunas."
+            err instanceof Error ? err.message : "Erro ao carregar comunas.",
           );
         }
       }
@@ -135,6 +140,57 @@ export default function OrganizationalUnitForm({
       cancelled = true;
     };
   }, [municipalityId]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadOrganizationalUnits() {
+      setIsLoadingParents(true);
+      setParentLoadError("");
+
+      try {
+        const result = await organizationalUnitService.listOrganizationalUnits(
+          parentPage,
+          20,
+        );
+
+        if (cancelled) return;
+
+        setOrganizationalUnits((current) => {
+          if (parentPage === 0) {
+            return result.content;
+          }
+
+          const existingIds = new Set(current.map((unit) => unit.id));
+
+          return [
+            ...current,
+            ...result.content.filter((unit) => !existingIds.has(unit.id)),
+          ];
+        });
+
+        setHasMoreParents(parentPage + 1 < result.totalPages);
+      } catch (err) {
+        if (!cancelled) {
+          setParentLoadError(
+            err instanceof Error
+              ? err.message
+              : "Erro ao carregar unidades organizacionais.",
+          );
+        }
+      } finally {
+        if (!cancelled) {
+          setIsLoadingParents(false);
+        }
+      }
+    }
+
+    void loadOrganizationalUnits();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [parentPage]);
 
   function getTerritorialUnitId(): string {
     switch (territoryLevel) {
@@ -183,7 +239,7 @@ export default function OrganizationalUnitForm({
       setError(
         err instanceof Error
           ? err.message
-          : "Erro ao criar unidade organizacional."
+          : "Erro ao criar unidade organizacional.",
       );
     } finally {
       setIsSubmitting(false);
@@ -210,7 +266,7 @@ export default function OrganizationalUnitForm({
             maxLength={30}
             required
             disabled={isSubmitting}
-            onChange={event => setCode(event.target.value)}
+            onChange={(event) => setCode(event.target.value)}
             placeholder="Código único"
           />
         </div>
@@ -223,7 +279,7 @@ export default function OrganizationalUnitForm({
             maxLength={150}
             required
             disabled={isSubmitting}
-            onChange={event => setName(event.target.value)}
+            onChange={(event) => setName(event.target.value)}
             placeholder="Nome da unidade organizacional"
           />
         </div>
@@ -236,7 +292,7 @@ export default function OrganizationalUnitForm({
             maxLength={50}
             required
             disabled={isSubmitting}
-            onChange={event => setType(event.target.value)}
+            onChange={(event) => setType(event.target.value)}
             placeholder="Tipo definido no backend"
           />
         </div>
@@ -250,7 +306,7 @@ export default function OrganizationalUnitForm({
             id="org-territory-level"
             value={territoryLevel}
             disabled={isLoading || isSubmitting}
-            onChange={event => {
+            onChange={(event) => {
               setTerritoryLevel(event.target.value as TerritoryChoice);
               setError("");
             }}
@@ -270,12 +326,16 @@ export default function OrganizationalUnitForm({
               value={nationalId}
               required
               disabled={isLoading || isSubmitting}
-              onChange={event => setNationalId(event.target.value)}
+              onChange={(event) => setNationalId(event.target.value)}
             >
               <option value="">Seleccionar unidade nacional</option>
-              {nationals.filter(unit => unit.active).map(unit => (
-                <option key={unit.id} value={unit.id}>{unit.name}</option>
-              ))}
+              {nationals
+                .filter((unit) => unit.active)
+                .map((unit) => (
+                  <option key={unit.id} value={unit.id}>
+                    {unit.name}
+                  </option>
+                ))}
             </select>
           </div>
         )}
@@ -288,7 +348,7 @@ export default function OrganizationalUnitForm({
               value={provinceId}
               required
               disabled={isLoading || isSubmitting}
-              onChange={event => {
+              onChange={(event) => {
                 setProvinceId(event.target.value);
                 setMunicipalityId("");
                 setCommuneId("");
@@ -298,15 +358,18 @@ export default function OrganizationalUnitForm({
               }}
             >
               <option value="">Seleccionar província</option>
-              {provinces.filter(unit => unit.active).map(unit => (
-                <option key={unit.id} value={unit.id}>{unit.name}</option>
-              ))}
+              {provinces
+                .filter((unit) => unit.active)
+                .map((unit) => (
+                  <option key={unit.id} value={unit.id}>
+                    {unit.name}
+                  </option>
+                ))}
             </select>
           </div>
         )}
 
-        {(territoryLevel === "MUNICIPAL" ||
-          territoryLevel === "COMMUNAL") && (
+        {(territoryLevel === "MUNICIPAL" || territoryLevel === "COMMUNAL") && (
           <div className="field-group">
             <label htmlFor="org-municipality">Município</label>
             <select
@@ -314,7 +377,7 @@ export default function OrganizationalUnitForm({
               value={municipalityId}
               required
               disabled={!provinceId || isSubmitting}
-              onChange={event => {
+              onChange={(event) => {
                 setMunicipalityId(event.target.value);
                 setCommuneId("");
                 setCommunes([]);
@@ -322,9 +385,13 @@ export default function OrganizationalUnitForm({
               }}
             >
               <option value="">Seleccionar município</option>
-              {municipalities.filter(unit => unit.active).map(unit => (
-                <option key={unit.id} value={unit.id}>{unit.name}</option>
-              ))}
+              {municipalities
+                .filter((unit) => unit.active)
+                .map((unit) => (
+                  <option key={unit.id} value={unit.id}>
+                    {unit.name}
+                  </option>
+                ))}
             </select>
           </div>
         )}
@@ -337,27 +404,66 @@ export default function OrganizationalUnitForm({
               value={communeId}
               required
               disabled={!municipalityId || isSubmitting}
-              onChange={event => setCommuneId(event.target.value)}
+              onChange={(event) => setCommuneId(event.target.value)}
             >
               <option value="">Seleccionar comuna</option>
-              {communes.filter(unit => unit.active).map(unit => (
-                <option key={unit.id} value={unit.id}>{unit.name}</option>
-              ))}
+              {communes
+                .filter((unit) => unit.active)
+                .map((unit) => (
+                  <option key={unit.id} value={unit.id}>
+                    {unit.name}
+                  </option>
+                ))}
             </select>
           </div>
         )}
 
         <div className="field-group">
           <label htmlFor="org-parent">Unidade organizacional superior</label>
-          <input
-            id="org-parent"
+
+          <select
+            id="organizational-parent"
             value={parentId}
-            onChange={event => setParentId(event.target.value)}
+            onChange={(event) => setParentId(event.target.value)}
             disabled={isSubmitting}
-            placeholder="UUID (opcional)"
-            pattern="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
-            title="Introduz um UUID válido ou deixa em branco."
-          />
+          >
+            <option value="">Sem unidade superior</option>
+
+            {organizationalUnits
+              .filter((unit) => unit.active)
+              .map((unit) => (
+                <option key={unit.id} value={unit.id}>
+                  {unit.name} ({unit.code})
+                </option>
+              ))}
+          </select>
+
+          <p className="field-hint">
+            Selecciona a unidade à qual esta ficará subordinada. Deixa em branco
+            para uma unidade sem superior.
+          </p>
+
+          {isLoadingParents && (
+            <p className="field-hint">A carregar unidades organizacionais...</p>
+          )}
+
+          {parentLoadError && (
+            <p className="change-password-error" role="alert">
+              {parentLoadError}
+            </p>
+          )}
+
+          {hasMoreParents && (
+            <button
+              type="button"
+              className="users-refresh-button"
+              onClick={() => setParentPage((current) => current + 1)}
+              disabled={isLoadingParents}
+            >
+              Carregar mais unidades
+            </button>
+          )}
+
           <p className="user-form-help">
             Deixa em branco para uma unidade sem superior.
           </p>
@@ -375,9 +481,7 @@ export default function OrganizationalUnitForm({
           disabled={isSubmitting || isLoading}
         >
           <Save size={17} />
-          {isSubmitting
-            ? "A guardar..."
-            : "Criar unidade organizacional"}
+          {isSubmitting ? "A guardar..." : "Criar unidade organizacional"}
         </button>
       </form>
     </section>
