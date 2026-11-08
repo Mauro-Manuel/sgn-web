@@ -24,12 +24,70 @@ export default function OrganizationalUnitsTable({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [reloadKey, setReloadKey] = useState(0);
+  const [parentNames, setParentNames] = useState<Record<string, string>>({});
+
+  const parentCache = useRef(new Map<string, string>());
 
   const [territoryNames, setTerritoryNames] = useState<Record<string, string>>(
     {},
   );
 
   const territoryCache = useRef(new Map<string, string>());
+
+  useEffect(() => {
+    const units = unitsPage?.content ?? [];
+
+    const parentIds = [
+      ...new Set(
+        units
+          .map((unit) => unit.parentId)
+          .filter((id): id is string => Boolean(id)),
+      ),
+    ];
+
+    if (parentIds.length === 0) {
+      setParentNames({});
+      return;
+    }
+
+    let cancelled = false;
+
+    async function loadParentNames() {
+      const missingIds = parentIds.filter((id) => !parentCache.current.has(id));
+
+      const results = await Promise.allSettled(
+        missingIds.map((id) =>
+          organizationalUnitService.getOrganizationalUnitById(id),
+        ),
+      );
+
+      if (cancelled) return;
+
+      results.forEach((result, index) => {
+        if (result.status === "fulfilled") {
+          parentCache.current.set(missingIds[index], result.value.name);
+        }
+      });
+
+      const names: Record<string, string> = {};
+
+      parentIds.forEach((id) => {
+        const name = parentCache.current.get(id);
+
+        if (name) {
+          names[id] = name;
+        }
+      });
+
+      setParentNames(names);
+    }
+
+    void loadParentNames();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [unitsPage]);
 
   useEffect(() => {
     let cancelled = false;
@@ -74,6 +132,7 @@ export default function OrganizationalUnitsTable({
     const units = unitsPage?.content ?? [];
 
     if (units.length === 0) {
+      setTerritoryNames({});
       return;
     }
 
@@ -227,11 +286,17 @@ export default function OrganizationalUnitsTable({
 
                     <td>
                       {unit.parentId ? (
-                        <span className="org-unit-uuid" title={unit.parentId}>
-                          {unit.parentId}
+                        <span
+                          className="org-territory-name"
+                          title={unit.parentId}
+                        >
+                          {parentNames[unit.parentId] ??
+                            "Unidade superior indisponível"}
                         </span>
                       ) : (
-                        <span className="org-unit-root">Unidade raiz</span>
+                        <span className="org-unit-root">
+                          Sem unidade superior
+                        </span>
                       )}
                     </td>
 
