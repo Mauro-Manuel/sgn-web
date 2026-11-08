@@ -10,7 +10,7 @@ import {
   LogOut,
 } from "lucide-react";
 
-export type AppPage = "dashboard" | "users" | "settings";
+export type AppPage = "dashboard" | "users" | "settings" | "nuclei";
 
 interface SidebarProps {
   open: boolean;
@@ -62,7 +62,7 @@ export default function Sidebar({
       id: "nuclei",
       label: "Núcleos",
       Icon: Network,
-      enabled: false,
+      enabled: isAdmin,
     },
     {
       id: "users",
@@ -129,7 +129,8 @@ export default function Sidebar({
                   if (
                     id === "dashboard" ||
                     id === "users" ||
-                    id === "settings"
+                    id === "settings" ||
+                    id === "nuclei"
                   ) {
                     handleNavigate(id);
                   }

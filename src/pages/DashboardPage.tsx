@@ -12,6 +12,7 @@ import type { AppPage } from "../components/layout/Sidebar";
 import StatsCard from "../components/dashboard/StatsCard";
 import UsersPage from "./UsersPage";
 import SettingsPage from "./settings/SettingsPage";
+import NucleiPage from "./NucleiPage";
 
 interface DashboardPageProps {
   name: string;
@@ -31,7 +32,10 @@ export default function DashboardPage({
   const isAdmin = role === "ADMIN";
 
   function handleNavigate(page: AppPage) {
-    if ((page === "users" || page === "settings") && !isAdmin) {
+    if (
+      (page === "users" || page === "settings" || page === "nuclei") &&
+      !isAdmin
+    ) {
       return;
     }
 
@@ -51,6 +55,8 @@ export default function DashboardPage({
         <UsersPage />
       ) : activePage === "settings" && isAdmin ? (
         <SettingsPage />
+      ) : activePage === "nuclei" && isAdmin ? (
+        <NucleiPage />
       ) : (
         <>
           <div className="dashboard-heading">
