@@ -134,7 +134,33 @@ async function listOrganizationalUnits(
 }
 
 
+async function getOrganizationalUnitById(
+  id: string
+): Promise<OrganizationalUnit> {
+  const response = await fetch(
+    `${API_BASE_URL}/${encodeURIComponent(id)}`,
+    {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      `Erro ao consultar unidade organizacional. HTTP ${response.status}`
+    );
+  }
+
+  return response.json() as Promise<OrganizationalUnit>;
+}
+
+
+
 export const organizationalUnitService = {
   createOrganizationalUnit,
-  listOrganizationalUnits
+  listOrganizationalUnits,
+  getOrganizationalUnitById
 };
