@@ -1,9 +1,10 @@
-
 import { useState, type ReactNode } from "react";
 import { Bell, Menu, UserCircle2 } from "lucide-react";
 
 import Sidebar from "./Sidebar";
 import type { AppPage } from "./Sidebar";
+
+import { getUserRoleLabel } from "../../utils/userRoleLabels";
 
 interface AppLayoutProps {
   children: ReactNode;
@@ -12,6 +13,7 @@ interface AppLayoutProps {
   onLogout: () => void;
   isLoggingOut: boolean;
   activePage: AppPage;
+  permissions: string[];
   onNavigate: (page: AppPage) => void;
 }
 
@@ -22,6 +24,7 @@ export default function AppLayout({
   onLogout,
   isLoggingOut,
   activePage,
+  permissions,
   onNavigate,
 }: AppLayoutProps) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -34,6 +37,7 @@ export default function AppLayout({
         onLogout={onLogout}
         isLoggingOut={isLoggingOut}
         role={role}
+        permissions={permissions}
         activePage={activePage}
         onNavigate={onNavigate}
       />
@@ -51,25 +55,20 @@ export default function AppLayout({
           </button>
 
           <div className="sgn-topbar-right">
-            <Bell
-              size={19}
-              aria-label="Notificações"
-            />
+            <Bell size={19} aria-label="Notificações" />
 
             <div className="sgn-user">
               <UserCircle2 size={30} />
 
               <div>
                 <strong>{name}</strong>
-                <span>{role}</span>
+                <span>{getUserRoleLabel(role)}</span>
               </div>
             </div>
           </div>
         </header>
 
-        <main className="sgn-dashboard-content">
-          {children}
-        </main>
+        <main className="sgn-dashboard-content">{children}</main>
       </div>
     </div>
   );

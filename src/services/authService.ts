@@ -44,6 +44,7 @@ async function getCsrfToken(): Promise<CsrfToken> {
     return csrf;
 }
 
+
 async function login(
     credentials: LoginRequest
 ): Promise<LoginResponse> {
@@ -55,35 +56,60 @@ async function login(
 
     if (!xsrfToken) {
         throw new Error(
-            "Cookie XSRF-TOKEN indisponível."
+            "Não foi possível iniciar sessão. Actualiza a página e tenta novamente."
         );
     }
 
-    const response = await fetch(`${API_BASE_URL}/login`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-            "Content-Type": "application/json",
-            [csrf.headerName]: xsrfToken
-        },
-        body: JSON.stringify(credentials)
-    });
+    let response: Response;
 
+    try {
+        response = await fetch(`${API_BASE_URL}/login`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                [csrf.headerName]: xsrfToken
+            },
+            body: JSON.stringify(credentials)
+        });
+    } catch {
+        throw new Error(
+            "Não foi possível estabelecer ligação ao servidor. Verifica a ligação e tenta novamente."
+        );
+    }
+
+    // Credenciais inválidas.
     if (response.status === 401) {
         throw new Error(
-            "Autenticação recusada pelo servidor (HTTP 401)."
+            "Nome de utilizador ou palavra-passe incorrectos. Verifica os dados e tenta novamente."
         );
     }
 
+    // Acesso recusado ou falha na validação CSRF.
     if (response.status === 403) {
         throw new Error(
-            "Acesso recusado ou token CSRF inválido (HTTP 403)."
+            "Não foi possível concluir a autenticação. Actualiza a página e tenta novamente."
         );
     }
 
+    // Limite de tentativas.
+    if (response.status === 429) {
+        throw new Error(
+            "Demasiadas tentativas de autenticação. Aguarda alguns minutos e tenta novamente."
+        );
+    }
+
+    // Erros internos ou indisponibilidade do servidor.
+    if (response.status >= 500) {
+        throw new Error(
+            "O serviço de autenticação está temporariamente indisponível. Tenta novamente mais tarde."
+        );
+    }
+
+    // Outros erros.
     if (!response.ok) {
         throw new Error(
-            `Erro na autenticação. HTTP ${response.status}`
+            "Não foi possível iniciar sessão. Tenta novamente."
         );
     }
 
@@ -95,6 +121,7 @@ async function login(
 
     return loginResponse;
 }
+
 
 async function changePassword(
     request: ChangePasswordRequest

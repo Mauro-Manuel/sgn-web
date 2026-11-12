@@ -2,15 +2,25 @@ import {
   LayoutDashboard,
   UsersRound,
   ClipboardList,
-  ArrowLeftRight,
   Network,
+  Building2,
   UserCog,
-  FileBarChart,
   Settings,
   LogOut,
+  ShieldCheck,
+  ScrollText,
 } from "lucide-react";
 
-export type AppPage = "dashboard" | "users" | "settings" | "nuclei";
+export type AppPage =
+  | "dashboard"
+  | "militants"
+  | "admissions"
+  | "users"
+  | "settings"
+  | "nuclei"
+  | "competent-bodies"
+  | "body-authorizations"
+  | "audit";
 
 interface SidebarProps {
   open: boolean;
@@ -19,7 +29,15 @@ interface SidebarProps {
   isLoggingOut: boolean;
   role: string;
   activePage: AppPage;
+  permissions: string[];
   onNavigate: (page: AppPage) => void;
+}
+
+interface MenuItem {
+  id: AppPage;
+  label: string;
+  Icon: typeof LayoutDashboard;
+  enabled: boolean;
 }
 
 export default function Sidebar({
@@ -29,11 +47,15 @@ export default function Sidebar({
   isLoggingOut,
   role,
   activePage,
+  permissions,
   onNavigate,
 }: SidebarProps) {
   const isAdmin = role === "ADMIN";
+  const isSupervisor = role === "SUPERVISOR_NUCLEO";
+  const isResponsible = role === "RESPONSAVEL_ORGAO_BASE";
+  const canReadAudit = role === "ADMIN" && permissions.includes("AUDIT_READ");
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     {
       id: "dashboard",
       label: "Dashboard",
@@ -44,19 +66,13 @@ export default function Sidebar({
       id: "militants",
       label: "Militantes",
       Icon: UsersRound,
-      enabled: false,
+      enabled: isSupervisor,
     },
     {
       id: "admissions",
       label: "Admissões",
       Icon: ClipboardList,
-      enabled: false,
-    },
-    {
-      id: "transfers",
-      label: "Transferências",
-      Icon: ArrowLeftRight,
-      enabled: false,
+      enabled: isResponsible,
     },
     {
       id: "nuclei",
@@ -65,16 +81,28 @@ export default function Sidebar({
       enabled: isAdmin,
     },
     {
+      id: "competent-bodies",
+      label: "Órgãos Competentes",
+      Icon: Building2,
+      enabled: isAdmin,
+    },
+    {
+      id: "body-authorizations",
+      label: "Autorizações",
+      Icon: ShieldCheck,
+      enabled: isAdmin,
+    },
+    {
+      id: "audit",
+      label: "Auditoria",
+      Icon: ScrollText,
+      enabled: canReadAudit,
+    },
+    {
       id: "users",
       label: "Utilizadores",
       Icon: UserCog,
       enabled: isAdmin,
-    },
-    {
-      id: "reports",
-      label: "Relatórios",
-      Icon: FileBarChart,
-      enabled: false,
     },
     {
       id: "settings",
@@ -82,7 +110,10 @@ export default function Sidebar({
       Icon: Settings,
       enabled: isAdmin,
     },
-  ] as const;
+  ];
+
+  // Apresentar apenas os menus autorizados.
+  const visibleMenuItems = menuItems.filter((item) => item.enabled);
 
   function handleNavigate(page: AppPage) {
     onNavigate(page);
@@ -115,7 +146,7 @@ export default function Sidebar({
         </div>
 
         <nav className="sidebar-navigation" aria-label="Menu principal">
-          {menuItems.map(({ id, label, Icon, enabled }) => {
+          {visibleMenuItems.map(({ id, label, Icon }) => {
             const isActive = id === activePage;
 
             return (
@@ -123,18 +154,8 @@ export default function Sidebar({
                 type="button"
                 key={id}
                 className={`sidebar-link ${isActive ? "active" : ""}`}
-                disabled={!enabled}
                 aria-current={isActive ? "page" : undefined}
-                onClick={() => {
-                  if (
-                    id === "dashboard" ||
-                    id === "users" ||
-                    id === "settings" ||
-                    id === "nuclei"
-                  ) {
-                    handleNavigate(id);
-                  }
-                }}
+                onClick={() => handleNavigate(id)}
               >
                 <Icon size={19} />
                 <span>{label}</span>
