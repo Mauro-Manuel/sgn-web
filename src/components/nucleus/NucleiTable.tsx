@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import {
   Network,
@@ -13,15 +14,21 @@ import { nucleusService } from "../../services/nucleusService";
 import { organizationalUnitService } from "../../services/organizationalUnitService";
 
 import type { Nucleus } from "../../types/nucleus/Nucleus";
+
 import EditNucleusForm from "./EditNucleusForm";
 import NucleusStatusModal from "./NucleusStatusModal";
 
 interface NucleiTableProps {
   refreshKey: number;
+  onNucleusUpdated?: () => void;
 }
 
-export default function NucleiTable({ refreshKey }: NucleiTableProps) {
+export default function NucleiTable({
+  refreshKey,
+  onNucleusUpdated,
+}: NucleiTableProps) {
   const [nuclei, setNuclei] = useState<Nucleus[]>([]);
+
   const [organizationNames, setOrganizationNames] = useState<
     Record<string, string>
   >({});
@@ -33,6 +40,8 @@ export default function NucleiTable({ refreshKey }: NucleiTableProps) {
   const [editingNucleus, setEditingNucleus] = useState<Nucleus | null>(null);
   const [statusNucleus, setStatusNucleus] = useState<Nucleus | null>(null);
 
+  const organizationCache = useRef(new Map<string, string>());
+
   function handleNucleusStatusChanged() {
     setStatusNucleus(null);
     setReloadKey((current) => current + 1);
@@ -40,10 +49,17 @@ export default function NucleiTable({ refreshKey }: NucleiTableProps) {
 
   function handleNucleusUpdated() {
     setEditingNucleus(null);
-    setReloadKey((current) => current + 1);
-  }
 
-  const organizationCache = useRef(new Map<string, string>());
+    // O NucleiPage trata a notificação e a actualização
+    // da tabela através do refreshKey.
+    if (onNucleusUpdated) {
+      onNucleusUpdated();
+    } else {
+      // Mantém compatibilidade caso o componente
+      // seja utilizado sem o callback.
+      setReloadKey((current) => current + 1);
+    }
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -99,8 +115,11 @@ export default function NucleiTable({ refreshKey }: NucleiTableProps) {
       } catch (err) {
         if (!cancelled) {
           setNuclei([]);
+
           setError(
-            err instanceof Error ? err.message : "Erro ao carregar Núcleos.",
+            err instanceof Error
+              ? err.message
+              : "Erro ao carregar Núcleos.",
           );
         }
       } finally {
@@ -256,6 +275,7 @@ export default function NucleiTable({ refreshKey }: NucleiTableProps) {
           </>
         ) : null}
       </section>
+
       {editingNucleus && (
         <EditNucleusForm
           nucleus={editingNucleus}

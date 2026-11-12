@@ -1,13 +1,12 @@
-
-import {
-  useEffect,
-  useState,
-  type FormEvent,
-} from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { Save, X } from "lucide-react";
 
 import { nucleusService } from "../../services/nucleusService";
 import type { Nucleus } from "../../types/nucleus/Nucleus";
+
+import { competentBodyService } from "../../services/competentBodyService";
+
+import type { CompetentBody } from "../../types/competentBody/CompetentBody";
 
 interface EditNucleusFormProps {
   nucleus: Nucleus;
@@ -24,15 +23,74 @@ export default function EditNucleusForm({
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState("");
 
+  const [competentBodies, setCompetentBodies] = useState<CompetentBody[]>([]);
+
+  const [competentBodyId, setCompetentBodyId] = useState("");
+
+  const [isLoadingBodies, setIsLoadingBodies] = useState(true);
+
+  const [bodiesError, setBodiesError] = useState("");
+
+  useEffect(() => {
+    let active = true;
+
+    async function loadCompetentBodies() {
+      setIsLoadingBodies(true);
+      setBodiesError("");
+
+      try {
+        const allBodies: CompetentBody[] = [];
+        let currentPage = 0;
+        let totalPages = 1;
+
+        do {
+          const result = await competentBodyService.listCompetentBodies(
+            currentPage,
+            50,
+          );
+
+          if (!active) return;
+
+          allBodies.push(...result.content);
+
+          totalPages = result.totalPages;
+          currentPage++;
+        } while (currentPage < totalPages);
+
+        if (active) {
+          setCompetentBodies(allBodies);
+        }
+      } catch (error) {
+        if (active) {
+          setBodiesError(
+            error instanceof Error
+              ? error.message
+              : "Não foi possível carregar os Órgãos Competentes.",
+          );
+        }
+      } finally {
+        if (active) {
+          setIsLoadingBodies(false);
+        }
+      }
+    }
+
+    void loadCompetentBodies();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   useEffect(() => {
     setName(nucleus.name);
     setError("");
   }, [nucleus.id, nucleus.name]);
 
-  async function handleSubmit(
-    event: FormEvent<HTMLFormElement>
-  ) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (isSaving) return;
 
     const trimmedName = name.trim();
 
@@ -46,7 +104,11 @@ export default function EditNucleusForm({
       return;
     }
 
-    if (trimmedName === nucleus.name) {
+    const nameChanged = trimmedName !== nucleus.name;
+    const competentBodySelected = competentBodyId !== "";
+
+    // Não enviar PATCH se não existir nenhuma alteração.
+    if (!nameChanged && !competentBodySelected) {
       onClose();
       return;
     }
@@ -57,14 +119,13 @@ export default function EditNucleusForm({
     try {
       await nucleusService.updateNucleus(nucleus.id, {
         name: trimmedName,
+        ...(competentBodySelected ? { competentBodyId } : {}),
       });
 
       onUpdated();
     } catch (err) {
       setError(
-        err instanceof Error
-          ? err.message
-          : "Erro ao actualizar o Núcleo."
+        err instanceof Error ? err.message : "Erro ao actualizar o Núcleo.",
       );
     } finally {
       setIsSaving(false);
@@ -74,11 +135,8 @@ export default function EditNucleusForm({
   return (
     <div
       className="nucleus-modal-backdrop"
-      onMouseDown={event => {
-        if (
-          event.target === event.currentTarget &&
-          !isSaving
-        ) {
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget && !isSaving) {
           onClose();
         }
       }}
@@ -91,9 +149,7 @@ export default function EditNucleusForm({
       >
         <div className="nucleus-modal-header">
           <div>
-            <h2 id="edit-nucleus-title">
-              Editar Núcleo
-            </h2>
+            <h2 id="edit-nucleus-title">Editar Núcleo</h2>
             <p>Actualizar o nome do Núcleo.</p>
           </div>
 
@@ -110,24 +166,16 @@ export default function EditNucleusForm({
 
         <form onSubmit={handleSubmit}>
           <div className="nucleus-modal-field">
-            <label htmlFor="edit-nucleus-code">
-              Código
-            </label>
-            <input
-              id="edit-nucleus-code"
-              value={nucleus.code}
-              disabled
-            />
+            <label htmlFor="edit-nucleus-code">Código</label>
+            <input id="edit-nucleus-code" value={nucleus.code} disabled />
           </div>
 
           <div className="nucleus-modal-field">
-            <label htmlFor="edit-nucleus-name">
-              Nome do Núcleo
-            </label>
+            <label htmlFor="edit-nucleus-name">Nome do Núcleo</label>
             <input
               id="edit-nucleus-name"
               value={name}
-              onChange={event => setName(event.target.value)}
+              onChange={(event) => setName(event.target.value)}
               maxLength={150}
               required
               autoFocus
@@ -135,11 +183,39 @@ export default function EditNucleusForm({
             />
           </div>
 
-          {error && (
-            <p
-              className="change-password-error"
-              role="alert"
+          <div className="nucleus-modal-field">
+            <label htmlFor="edit-nucleus-competent-body">
+              Órgão Competente
+            </label>
+
+            <select
+              id="edit-nucleus-competent-body"
+              value={competentBodyId}
+              onChange={(event) => setCompetentBodyId(event.target.value)}
+              disabled={isLoadingBodies || isSaving}
             >
+              <option value="">
+                {isLoadingBodies
+                  ? "A carregar Órgãos Competentes..."
+                  : "Manter órgão competente actual"}
+              </option>
+
+              {competentBodies.map((body) => (
+                <option key={body.id} value={body.id}>
+                  {body.name} ({body.code})
+                </option>
+              ))}
+            </select>
+
+            {bodiesError && (
+              <p className="change-password-error" role="alert">
+                {bodiesError}
+              </p>
+            )}
+          </div>
+
+          {error && (
+            <p className="change-password-error" role="alert">
               {error}
             </p>
           )}
@@ -160,9 +236,7 @@ export default function EditNucleusForm({
               disabled={isSaving}
             >
               <Save size={17} />
-              {isSaving
-                ? "A guardar..."
-                : "Guardar alterações"}
+              {isSaving ? "A guardar..." : "Guardar alterações"}
             </button>
           </div>
         </form>

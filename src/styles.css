@@ -2408,3 +2408,2476 @@ button:disabled {
   max-width: none;
   box-sizing: border-box;
 }
+
+
+
+/* SGN - REGISTO DE MILITANTES */
+
+.members-page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.member-form-card {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 28px;
+  margin-top: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.member-admission-info {
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 9px;
+  color: #075985;
+  font-size: 14px;
+}
+
+.member-registration-success {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  margin-top: 20px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  color: #166534;
+}
+
+.member-registration-success p {
+  margin: 6px 0 0;
+}
+
+@media (max-width: 768px) {
+  .member-form-card {
+    padding: 18px;
+  }
+}
+
+
+/* SGN - LISTAGEM DE MILITANTES */
+
+.members-table-card {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 28px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.members-table-card .users-table-header {
+  margin-bottom: 24px;
+}
+
+.members-table-card .users-table-scroll {
+  overflow-x: auto;
+}
+
+.members-table-card .users-table {
+  min-width: 680px;
+  width: 100%;
+}
+
+.members-filters {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.members-search-field {
+  flex: 2 1 240px;
+  min-width: 0;
+}
+
+.members-status-field {
+  flex: 1 1 180px;
+  min-width: 0;
+}
+
+.members-search-field,
+.members-status-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.members-filters label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.members-search-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  box-sizing: border-box;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  color: #64748b;
+}
+
+.members-search-input input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+}
+
+.members-status-field select {
+  height: 44px;
+  width: 100%;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #fff;
+  color: #334155;
+  font: inherit;
+}
+
+.members-search-button,
+.members-clear-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 9px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.members-search-button {
+  background: #087a41;
+  color: #fff;
+  border: 1px solid #087a41;
+}
+
+.members-search-button:hover {
+  background: #066534;
+}
+
+.members-clear-button {
+  background: #fff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.member-admission-badge {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.member-admission-pendente {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.member-admission-admitido {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.member-admission-nao_admitido {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.member-no-status {
+  color: #94a3b8;
+}
+
+/* NOTIFICAÇÃO DE REGISTO */
+
+.member-success-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.member-success-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  background: transparent;
+  border: 0;
+  border-radius: 8px;
+  color: #166534;
+  cursor: pointer;
+}
+
+.member-success-close:hover {
+  background: #dcfce7;
+}
+
+@media (max-width: 768px) {
+  .members-table-card {
+    padding: 18px;
+  }
+
+  .members-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .members-search-field,
+  .members-status-field {
+    flex: none;
+    width: 100%;
+  }
+
+  .members-search-button,
+  .members-clear-button {
+    width: 100%;
+  }
+}
+
+
+/* SGN - GESTÃO DE ADMISSÕES */
+
+.admissions-page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+.admission-form-card {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 24px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+@media (max-width: 768px) {
+  .admission-form-card {
+    padding: 18px;
+  }
+}
+
+
+.admission-selected-info {
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.admission-selected-info strong {
+  font-size: 13px;
+  color: #334155;
+}
+
+.admission-selected-info p {
+  margin: 8px 0 4px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.admission-selected-info small {
+  color: #64748b;
+}
+
+.admission-form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.admission-refresh-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: #fff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.admission-refresh-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+
+
+/* ========================================
+   SGN - GESTÃO DE ÓRGÃOS COMPETENTES
+======================================== */
+
+.competent-bodies-page {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+}
+
+/* CARTÕES */
+
+.competent-body-card {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 24px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+/* CABEÇALHO DO FORMULÁRIO */
+
+.competent-body-heading {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  margin-bottom: 26px;
+  color: #087a41;
+}
+
+.competent-body-heading svg {
+  flex-shrink: 0;
+}
+
+.competent-body-heading h3 {
+  margin: 0 0 5px;
+  color: #17211e;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.competent-body-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* FORMULÁRIO */
+
+.competent-body-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 620px;
+  gap: 0;
+}
+
+.competent-body-fields {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0;
+}
+
+/* CAMPOS */
+
+.competent-body-form .field-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 22px;
+  gap: 0;
+}
+
+.competent-body-form .field-group label {
+  display: block;
+  margin-bottom: 9px;
+  color: #17211e;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.competent-body-form input,
+.competent-body-form select {
+  display: block;
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+  box-sizing: border-box;
+  padding: 0 15px;
+  border: 1px solid #cbd3db;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #18232d;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.competent-body-form input:focus,
+.competent-body-form select:focus {
+  border-color: #087a41;
+  box-shadow: 0 0 0 3px #087a4121;
+}
+
+.competent-body-form input::placeholder {
+  color: #8a96a3;
+}
+
+.competent-body-form input:disabled,
+.competent-body-form select:disabled {
+  background: #f8fafc;
+  cursor: not-allowed;
+}
+
+/* BOTÃO DE CRIAÇÃO */
+
+.competent-body-form-actions {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.competent-body-form-actions .submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 6px;
+  background: #e00020;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.competent-body-form-actions .submit-button:hover:not(:disabled) {
+  background: #b9001a;
+}
+
+.competent-body-form-actions .submit-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* CABEÇALHO DA LISTAGEM */
+
+.competent-body-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.competent-body-list-header h3 {
+  margin: 0 0 6px;
+  color: #17211e;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.competent-body-list-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* TABELA */
+
+.competent-body-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.competent-body-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.competent-body-table thead {
+  background: #f5f7f9;
+}
+
+.competent-body-table th {
+  padding: 14px 16px;
+  color: #475569;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.competent-body-table td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #edf0f2;
+  color: #334155;
+}
+
+.competent-body-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+/* PAGINAÇÃO */
+
+.competent-body-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.competent-body-pagination > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.competent-body-pagination button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 12px;
+  border: 1px solid #d9e1e7;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.competent-body-pagination button:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.competent-body-pagination button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 768px) {
+  .competent-body-card {
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .competent-body-form {
+    max-width: 100%;
+  }
+
+  .competent-body-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .competent-body-table th,
+  .competent-body-table td {
+    padding: 12px;
+  }
+
+  .competent-body-pagination {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .competent-body-heading {
+    align-items: flex-start;
+  }
+
+  .competent-body-heading h3 {
+    font-size: 18px;
+  }
+
+  .competent-body-form input,
+  .competent-body-form select {
+    width: 100%;
+  }
+
+  .competent-body-form-actions .submit-button {
+    width: 100%;
+  }
+}
+
+
+/* NOTIFICAÇÃO DE SUCESSO - ÓRGÃOS COMPETENTES */
+
+.competent-body-success {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 20px 0;
+  padding: 16px 18px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  color: #166534;
+}
+
+.competent-body-success > svg {
+  flex-shrink: 0;
+}
+
+.competent-body-success strong {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.competent-body-success-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #166534;
+  cursor: pointer;
+}
+
+.competent-body-success-close:hover {
+  background: #dcfce7;
+}
+
+.competent-body-success-close:focus-visible {
+  outline: 2px solid #087a41;
+  outline-offset: 2px;
+}
+
+
+
+
+.nucleus-modal-field select {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #334155;
+  font: inherit;
+  font-size: 13px;
+}
+
+.nucleus-modal-field select:focus {
+  outline: 2px solid #087a41;
+  outline-offset: 1px;
+}
+
+.nucleus-modal-field select:disabled {
+  background: #f3f5f7;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+
+/* ========================================
+   SGN - NOTIFICAÇÃO DE NÚCLEO ACTUALIZADO
+======================================== */
+
+.nucleus-update-success {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  margin: 0 0 20px;
+  padding: 16px 18px;
+
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  color: #166534;
+}
+
+.nucleus-update-success > svg {
+  flex-shrink: 0;
+  color: #087a41;
+}
+
+.nucleus-update-success strong {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nucleus-update-success-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  padding: 0;
+
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: #166534;
+
+  cursor: pointer;
+}
+
+.nucleus-update-success-close:hover {
+  background: #dcfce7;
+}
+
+.nucleus-update-success-close:focus-visible {
+  outline: 2px solid #087a41;
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .nucleus-update-success {
+    padding: 14px;
+  }
+
+  .nucleus-update-success strong {
+    font-size: 13px;
+  }
+}
+
+
+/* ========================================
+   SGN - AUTORIZAÇÕES DE ÓRGÃOS COMPETENTES
+======================================== */
+
+.body-authorization-card {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 24px;
+  padding: 28px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.body-authorization-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 26px;
+  color: #087a41;
+}
+
+.body-authorization-heading > svg {
+  flex-shrink: 0;
+}
+
+.body-authorization-heading h3 {
+  margin: 0 0 5px;
+  color: #17211e;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.body-authorization-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.body-authorization-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 620px;
+}
+
+.body-authorization-form .field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 22px;
+}
+
+.body-authorization-form label {
+  display: block;
+  margin-bottom: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #17211e;
+}
+
+.body-authorization-form input,
+.body-authorization-form select {
+  width: 100%;
+  height: 48px;
+  padding: 0 15px;
+  border: 1px solid #cbd3db;
+  border-radius: 6px;
+  background: #fff;
+  color: #18232d;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.body-authorization-form input:focus,
+.body-authorization-form select:focus {
+  border-color: #087a41;
+  box-shadow: 0 0 0 3px #087a4121;
+}
+
+.body-authorization-form input:disabled,
+.body-authorization-form select:disabled {
+  background: #f8fafc;
+  cursor: not-allowed;
+}
+
+.body-authorization-form .submit-button {
+  width: 100%;
+  min-height: 48px;
+}
+
+@media (max-width: 768px) {
+  .body-authorization-card {
+    padding: 18px;
+    border-radius: 12px;
+  }
+
+  .body-authorization-form {
+    max-width: 100%;
+  }
+}
+
+
+/* GESTÃO DE AUTORIZAÇÕES */
+
+.body-authorizations-page {
+  width: 100%;
+  min-width: 0;
+}
+
+.body-authorization-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.body-authorization-list-header h3 {
+  margin: 0 0 6px;
+  color: #17211e;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.body-authorization-list-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* FILTRO DE UTILIZADOR */
+
+.body-authorization-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  max-width: 620px;
+  margin-bottom: 24px;
+}
+
+.body-authorization-filter label {
+  color: #17211e;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.body-authorization-filter select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 15px;
+  border: 1px solid #cbd3db;
+  border-radius: 6px;
+  background: #fff;
+  color: #18232d;
+  font: inherit;
+  font-size: 13px;
+}
+
+.body-authorization-filter select:focus {
+  outline: none;
+  border-color: #087a41;
+  box-shadow: 0 0 0 3px #087a4121;
+}
+
+/* TABELA */
+
+.body-authorization-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.body-authorization-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.body-authorization-table thead {
+  background: #f5f7f9;
+}
+
+.body-authorization-table th {
+  padding: 14px 16px;
+  color: #475569;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.body-authorization-table td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #edf0f2;
+  color: #334155;
+}
+
+.body-authorization-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+/* NOTIFICAÇÃO DE SUCESSO */
+
+.body-authorization-success {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 16px 18px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  color: #166534;
+}
+
+.body-authorization-success > svg {
+  flex-shrink: 0;
+}
+
+.body-authorization-success strong {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.body-authorization-success button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #166534;
+  cursor: pointer;
+}
+
+.body-authorization-success button:hover {
+  background: #dcfce7;
+}
+
+.body-authorization-success button:focus-visible {
+  outline: 2px solid #087a41;
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .body-authorization-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .body-authorization-table th,
+  .body-authorization-table td {
+    padding: 12px;
+  }
+
+  .body-authorization-filter {
+    max-width: 100%;
+  }
+}
+
+
+/* ========================================
+   SGN - DETALHES DO MILITANTE
+======================================== */
+
+.member-details-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.member-details-modal {
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.member-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.member-details-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #087a41;
+}
+
+.member-details-heading h2 {
+  margin: 0 0 5px;
+  color: #17211e;
+  font-size: 20px;
+}
+
+.member-details-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.member-details-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #475569;
+  cursor: pointer;
+}
+
+.member-details-close:hover {
+  background: #f1f5f9;
+}
+
+.member-details-name {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 18px;
+  border-radius: 10px;
+  background: #f0f8f3;
+  color: #087a41;
+}
+
+.member-details-name strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #17211e;
+  font-size: 17px;
+}
+
+.member-details-name span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.member-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.member-details-field {
+  min-width: 0;
+}
+
+.member-details-field label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.member-details-field p {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #17211e;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.member-details-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.member-details-status-activo {
+  background: #e8f6ee;
+  color: #087a41;
+}
+
+.member-details-status-inactivo {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.member-details-status-desvinculado {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.member-details-message {
+  padding: 24px;
+  text-align: center;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.member-details-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.member-details-close:focus-visible {
+  outline: 2px solid #087a41;
+  outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+  .member-details-backdrop {
+    padding: 12px;
+  }
+
+  .member-details-modal {
+    padding: 20px;
+  }
+
+  .member-details-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .member-details-heading h2 {
+    font-size: 18px;
+  }
+}
+
+/* LINK PARA DETALHES DO MILITANTE */
+
+.member-details-link {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #17211e;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.member-details-link:hover {
+  color: #087a41;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.member-details-link:focus-visible {
+  outline: 2px solid #087a41;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ========================================
+   SGN - HISTÓRICO DE ADMISSÕES DO MILITANTE
+======================================== */
+
+.member-admission-history {
+  width: 100%;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.member-admission-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.member-admission-history-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #087a41;
+}
+
+.member-admission-history-title > svg {
+  flex-shrink: 0;
+}
+
+.member-admission-history-title h3 {
+  margin: 0 0 5px;
+  color: #17211e;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.member-admission-history-title p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.member-admission-history-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid #d9e1e7;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.member-admission-history-refresh:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.member-admission-history-refresh:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.member-admission-history-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.member-admission-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.member-admission-history-table thead {
+  background: #f5f7f9;
+}
+
+.member-admission-history-table th {
+  padding: 13px 14px;
+  color: #475569;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.member-admission-history-table td {
+  padding: 15px 14px;
+  border-bottom: 1px solid #edf0f2;
+  color: #334155;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
+}
+
+.member-admission-history-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+.member-admission-history-message {
+  padding: 20px 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.member-admission-history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 12px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.member-admission-history-empty p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .member-admission-history-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .member-admission-history-table th,
+  .member-admission-history-table td {
+    padding: 12px 10px;
+  }
+}
+
+
+/* ========================================
+   SGN - DETALHES DO MILITANTE
+   LAYOUT HORIZONTAL
+======================================== */
+
+/* MODAL MAIS LARGO */
+
+.member-details-modal {
+  width: min(1080px, 96vw);
+  max-width: 1080px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+}
+
+/* DUAS COLUNAS */
+
+.member-details-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  align-items: start;
+  gap: 24px;
+  width: 100%;
+}
+
+/* DADOS PESSOAIS */
+
+.member-details-personal {
+  min-width: 0;
+}
+
+.member-details-personal .member-details-name {
+  margin-bottom: 22px;
+  padding: 18px;
+}
+
+/* CAMPOS EM GRELHA */
+
+.member-details-personal .member-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 24px 18px;
+}
+
+/* NÚCLEO OCUPA A LARGURA TOTAL */
+
+.member-details-personal
+.member-details-grid
+.member-details-field:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+/* CORRIGE ALINHAMENTO DE ADMISSÃO E ESTADO */
+
+.member-details-personal .member-details-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.member-details-personal .member-details-field label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.member-details-personal .member-admission-badge,
+.member-details-personal .member-details-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: 28px;
+  margin: 0;
+  padding: 6px 11px;
+  border-radius: 999px;
+  line-height: 1.2;
+}
+
+/* COLUNA DO HISTÓRICO */
+
+.member-details-history-panel {
+  min-width: 0;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+/* REMOVE O SEPARADOR VERTICAL ANTIGO
+   DO COMPONENTE DO HISTÓRICO */
+
+.member-details-history-panel .member-admission-history {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border-top: none;
+}
+
+/* CABEÇALHO DO HISTÓRICO */
+
+.member-details-history-panel
+.member-admission-history-header {
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.member-details-history-panel
+.member-admission-history-title h3 {
+  font-size: 16px;
+}
+
+/* TABELA DO HISTÓRICO */
+
+.member-details-history-panel
+.member-admission-history-table {
+  width: 100%;
+}
+
+.member-details-history-panel
+.member-admission-history-table th,
+.member-details-history-panel
+.member-admission-history-table td {
+  padding: 12px 10px;
+  font-size: 12px;
+}
+
+/* BOTÃO FECHAR */
+
+.member-details-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* TABLETS */
+
+@media (max-width: 900px) {
+  .member-details-modal {
+    width: min(720px, 96vw);
+  }
+
+  .member-details-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .member-details-history-panel {
+    padding: 18px;
+  }
+}
+
+/* TELEMÓVEIS */
+
+@media (max-width: 600px) {
+  .member-details-modal {
+    width: 100%;
+    max-width: 100%;
+    padding: 18px;
+  }
+
+  .member-details-personal .member-details-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .member-details-personal
+  .member-details-grid
+  .member-details-field:nth-child(3) {
+    grid-column: auto;
+  }
+
+  .member-details-history-panel {
+    padding: 14px;
+  }
+
+  .member-details-history-panel
+  .member-admission-history-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .member-details-actions {
+    margin-top: 20px;
+  }
+}
+
+
+/* ========================================
+   SGN - HISTÓRICO DE ENQUADRAMENTOS
+======================================== */
+
+/* COLUNA DOS HISTÓRICOS */
+
+.member-details-history-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* COMPONENTE */
+
+.member-assignment-history {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* CABEÇALHO */
+
+.member-assignment-history-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.member-assignment-history-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  color: #087a41;
+}
+
+.member-assignment-history-title > svg {
+  flex-shrink: 0;
+}
+
+.member-assignment-history-title h3 {
+  margin: 0 0 5px;
+  color: #17211e;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.member-assignment-history-title p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* BOTÃO ACTUALIZAR */
+
+.member-assignment-history-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid #d9e1e7;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #334155;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.member-assignment-history-refresh:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.member-assignment-history-refresh:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* TABELA */
+
+.member-assignment-history-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.member-assignment-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 12px;
+}
+
+.member-assignment-history-table thead {
+  background: #f5f7f9;
+}
+
+.member-assignment-history-table th {
+  padding: 12px 10px;
+  color: #475569;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.member-assignment-history-table td {
+  padding: 13px 10px;
+  border-bottom: 1px solid #edf0f2;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.member-assignment-history-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+/* ESTADOS DO ENQUADRAMENTO */
+
+.member-assignment-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.member-assignment-current {
+  background: #e8f6ee;
+  color: #087a41;
+}
+
+.member-assignment-previous {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+/* CARREGAMENTO E ESTADO VAZIO */
+
+.member-assignment-history-message {
+  padding: 20px 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.member-assignment-history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 12px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.member-assignment-history-empty p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 900px) {
+  .member-details-history-column {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .member-assignment-history-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .member-assignment-history-table th,
+  .member-assignment-history-table td {
+    padding: 11px 9px;
+  }
+}
+
+/* ========================================
+   SGN - AUDITORIA DO SISTEMA
+======================================== */
+
+.audit-page {
+  width: 100%;
+  min-width: 0;
+}
+
+.audit-card {
+  width: 100%;
+  margin-top: 24px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.audit-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.audit-card-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #087a41;
+}
+
+.audit-card-title h3 {
+  margin: 0 0 6px;
+  color: #17211e;
+  font-size: 20px;
+}
+
+.audit-card-title p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+/* FILTROS */
+
+.audit-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.audit-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.audit-filter-field label {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.audit-filter-field input,
+.audit-filter-field select {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #334155;
+  font: inherit;
+  font-size: 13px;
+}
+
+.audit-filter-field input:focus,
+.audit-filter-field select:focus {
+  outline: none;
+  border-color: #087a41;
+  box-shadow: 0 0 0 3px #087a4121;
+}
+
+.audit-filter-actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+
+/* TABELA */
+
+.audit-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.audit-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.audit-table thead {
+  background: #f5f7f9;
+}
+
+.audit-table th {
+  padding: 14px 16px;
+  color: #475569;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.audit-table td {
+  padding: 15px 16px;
+  border-bottom: 1px solid #edf0f2;
+  color: #334155;
+}
+
+.audit-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+/* RESULTADOS */
+
+.audit-outcome {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.audit-outcome-success {
+  background: #e8f6ee;
+  color: #087a41;
+}
+
+.audit-outcome-failure {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* DETALHES */
+
+.audit-details-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 12px;
+  border: 1px solid #d9e1e7;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #087a41;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.audit-details-button:hover {
+  background: #f0faf4;
+  border-color: #087a41;
+}
+
+/* PAGINAÇÃO */
+
+.audit-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.audit-pagination > div {
+  display: flex;
+  gap: 10px;
+}
+
+.audit-pagination button {
+  padding: 9px 13px;
+  border: 1px solid #d9e1e7;
+  border-radius: 8px;
+  background: white;
+  color: #334155;
+  cursor: pointer;
+}
+
+.audit-pagination button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* MODAL */
+
+.audit-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.audit-modal {
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+}
+
+.audit-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.audit-modal-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #087a41;
+}
+
+.audit-modal-heading h2 {
+  margin: 0 0 5px;
+  color: #17211e;
+  font-size: 20px;
+}
+
+.audit-modal-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.audit-modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #475569;
+  cursor: pointer;
+}
+
+.audit-modal-close:hover {
+  background: #f1f5f9;
+}
+
+.audit-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.audit-details-grid > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  min-width: 0;
+}
+
+.audit-details-grid label {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.audit-details-grid strong {
+  color: #17211e;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.audit-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 1100px) {
+  .audit-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .audit-card,
+  .audit-modal {
+    padding: 18px;
+  }
+
+  .audit-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .audit-filters,
+  .audit-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .audit-filter-actions,
+  .audit-pagination {
+    flex-wrap: wrap;
+  }
+
+  .audit-table th,
+  .audit-table td {
+    padding: 12px 10px;
+  }
+}
+
+
+/* ========================================
+   SGN - GESTÃO DE ACESSOS À AUDITORIA
+======================================== */
+
+.audit-access-card {
+  width: 100%;
+  margin-top: 24px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.audit-access-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.audit-access-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #087a41;
+}
+
+.audit-access-heading h3 {
+  margin: 0 0 6px;
+  color: #17211e;
+  font-size: 19px;
+}
+
+.audit-access-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.audit-access-refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid #d9e1e7;
+  border-radius: 8px;
+  background: #fff;
+  color: #334155;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.audit-access-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  max-width: 480px;
+  margin-bottom: 22px;
+}
+
+.audit-access-field label {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.audit-access-field select {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #334155;
+  font: inherit;
+  font-size: 13px;
+}
+
+.audit-access-field select:focus {
+  outline: none;
+  border-color: #087a41;
+  box-shadow: 0 0 0 3px rgba(8, 122, 65, 0.12);
+}
+
+.audit-access-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.audit-access-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.audit-access-grant {
+  background: #087a41;
+  color: #ffffff;
+}
+
+.audit-access-revoke {
+  background: #991b1b;
+  color: #ffffff;
+}
+
+.audit-access-actions button:disabled,
+.audit-access-refresh:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.audit-access-success {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border: 1px solid #bbebcf;
+  border-radius: 9px;
+  background: #edf9f1;
+  color: #17633b;
+  font-size: 13px;
+}
+
+.audit-access-success button {
+  flex-shrink: 0;
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.audit-access-error {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+  background: #fef2f2;
+  color: #991b1b;
+  font-size: 13px;
+}
+
+.audit-access-note {
+  margin: 20px 0 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  .audit-access-card {
+    padding: 18px;
+  }
+
+  .audit-access-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .audit-access-actions {
+    flex-direction: column;
+  }
+
+  .audit-access-actions button {
+    width: 100%;
+  }
+}
+
+/* ==========================================
+   SGN - MODAL DE CONFIRMAÇÃO DE AUDITORIA
+========================================== */
+
+.audit-revoke-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.audit-revoke-modal {
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+
+  padding: 28px;
+  border-radius: 16px;
+  background: #ffffff;
+
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.22);
+}
+
+.audit-revoke-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.audit-revoke-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 52px;
+  height: 52px;
+
+  border-radius: 14px;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.audit-revoke-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.audit-revoke-close:hover:not(:disabled) {
+  background: #f1f5f9;
+}
+
+.audit-revoke-modal h2 {
+  margin: 0 0 14px;
+  color: #17211e;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.audit-revoke-modal > p {
+  margin: 0 0 16px;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.audit-revoke-modal > p strong {
+  color: #17211e;
+}
+
+.audit-revoke-warning {
+  padding: 14px 16px;
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+  background: #fef2f2;
+  color: #991b1b !important;
+  font-size: 13px !important;
+}
+
+/* BOTÕES */
+
+.audit-revoke-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.audit-revoke-actions button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.audit-revoke-cancel {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+}
+
+.audit-revoke-cancel:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.audit-revoke-confirm {
+  border: 1px solid #b91c1c;
+  background: #b91c1c;
+  color: #ffffff;
+}
+
+.audit-revoke-confirm:hover:not(:disabled) {
+  background: #991b1b;
+}
+
+/* CONCESSÃO - VERDE */
+
+.audit-revoke-modal .audit-access-grant {
+  border: 1px solid #087a41;
+  background: #087a41;
+  color: #ffffff;
+}
+
+.audit-revoke-modal .audit-access-grant:hover:not(:disabled) {
+  background: #066b38;
+}
+
+/* ESTADOS */
+
+.audit-revoke-actions button:disabled,
+.audit-revoke-close:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 600px) {
+  .audit-revoke-modal {
+    padding: 22px;
+  }
+
+  .audit-revoke-actions {
+    flex-direction: column-reverse;
+  }
+
+  .audit-revoke-actions button {
+    width: 100%;
+  }
+}

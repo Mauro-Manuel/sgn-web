@@ -70,9 +70,9 @@ export default function App() {
   const { showWarning, renewActivity } = useSessionInactivity({
     enabled: authenticatedUser !== null,
     onExpire: () => {
-        void handleSessionExpired();
-    }
-});
+      void handleSessionExpired();
+    },
+  });
 
   // ========================================
   // RECUPERAR SESSÃO APÓS REFRESH
@@ -251,34 +251,31 @@ export default function App() {
 
   async function handleContinueSession() {
     if (isRenewingSession) {
-        return;
+      return;
     }
 
     setIsRenewingSession(true);
 
     try {
-        const user = await authService.getAuthenticatedUser();
+      const user = await authService.getAuthenticatedUser();
 
-        if (user.passwordChangeRequired) {
-            setAuthenticatedUser(null);
-            setPasswordChangeRequired(true);
-            return;
-        }
-
-        setAuthenticatedUser(user);
-        renewActivity();
-
-    } catch {
+      if (user.passwordChangeRequired) {
         setAuthenticatedUser(null);
-        setMessage(
-            "Não foi possível confirmar a sessão. " +
-            "Autentica-te novamente."
-        );
+        setPasswordChangeRequired(true);
+        return;
+      }
 
+      setAuthenticatedUser(user);
+      renewActivity();
+    } catch {
+      setAuthenticatedUser(null);
+      setMessage(
+        "Não foi possível confirmar a sessão. " + "Autentica-te novamente.",
+      );
     } finally {
-        setIsRenewingSession(false);
+      setIsRenewingSession(false);
     }
-}
+  }
 
   // ========================================
   // CONTROLO DAS PÁGINAS
@@ -318,61 +315,51 @@ export default function App() {
     );
   }
 
-
-if (authenticatedUser !== null) {
+  if (authenticatedUser !== null) {
     return (
-        <>
-            <DashboardPage
-                name={authenticatedUser.name}
-                role={authenticatedUser.role}
-                onLogout={() => {
-                    void handleLogout();
-                }}
-                isLoggingOut={isLoggingOut}
-            />
+      <>
+        <DashboardPage
+          name={authenticatedUser.name}
+          role={authenticatedUser.role}
+          permissions={authenticatedUser.permissions ?? []}
+          onLogout={handleLogout}
+          isLoggingOut={isLoggingOut}
+        />
+        {showWarning && (
+          <SessionWarning
+            isLoading={isRenewingSession}
+            onContinue={() => {
+              void handleContinueSession();
+            }}
+          />
+        )}
 
-            {showWarning && (
-                <SessionWarning
-                    isLoading={isRenewingSession}
-                    onContinue={() => {
-                        void handleContinueSession();
-                    }}
-                />
-            )}
-
-            {message && (
-                <p className="dashboard-error" role="alert">
-                    {message}
-                </p>
-            )}
-        </>
+        {message && (
+          <p className="dashboard-error" role="alert">
+            {message}
+          </p>
+        )}
+      </>
     );
-}
+  }
 
-
-
-  
-async function handleSessionExpired() {
+  async function handleSessionExpired() {
     try {
-        await authService.logout();
+      await authService.logout();
     } catch {
-        // A sessão pode já ter expirado no servidor.
-        // Não assumimos que o logout remoto teve sucesso.
+      // A sessão pode já ter expirado no servidor.
+      // Não assumimos que o logout remoto teve sucesso.
     } finally {
-        setAuthenticatedUser(null);
-        setPasswordChangeRequired(false);
-        setPasswordChanged(false);
-        setPassword("");
+      setAuthenticatedUser(null);
+      setPasswordChangeRequired(false);
+      setPasswordChanged(false);
+      setPassword("");
 
-        setMessage(
-            "A sessão expirou por inactividade. " +
-            "Autentica-te novamente."
-        );
+      setMessage(
+        "A sessão expirou por inactividade. " + "Autentica-te novamente.",
+      );
     }
-}
-
-
-
+  }
 
   // ========================================
   // PÁGINA DE LOGIN

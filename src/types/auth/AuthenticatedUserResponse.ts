@@ -1,8 +1,9 @@
 
 export interface AuthenticatedUserResponse {
-    userId: string;
-    name: string;
-    username: string;
-    role: string;
-    passwordChangeRequired: boolean;
+  id: string;
+  name: string;
+  username: string;
+  role: string;
+  passwordChangeRequired: boolean;
+  permissions: string[];
 }
