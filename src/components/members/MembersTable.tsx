@@ -1,6 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 
 import {
+  ArrowLeftRight,
   ChevronLeft,
   ChevronRight,
   RefreshCw,
@@ -9,6 +10,8 @@ import {
 } from "lucide-react";
 
 import { memberService } from "../../services/memberService";
+import RequestTransferModal from "../transfers/RequestTransferModal";
+import { nucleusService } from "../../services/nucleusService";
 
 import type {
   Member,
@@ -62,6 +65,18 @@ function memberStatusLabel(status: MemberStatus | null): string {
   }
 }
 
+interface TransferTarget {
+  memberId: string;
+  memberName: string;
+  originNucleusId: string;
+  originNucleusName: string;
+}
+
+interface DestinationNucleus {
+  id: string;
+  name: string;
+}
+
 export default function MembersTable({ refreshKey }: MembersTableProps) {
   const [page, setPage] = useState(0);
 
@@ -79,6 +94,20 @@ export default function MembersTable({ refreshKey }: MembersTableProps) {
   const [reloadKey, setReloadKey] = useState(0);
 
   const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
+
+  const [transferTarget, setTransferTarget] = useState<TransferTarget | null>(
+    null,
+  );
+
+  const [isPreparingTransfer, setIsPreparingTransfer] = useState<string | null>(
+    null,
+  );
+
+  const [transferError, setTransferError] = useState("");
+  const [transferSuccess, setTransferSuccess] = useState("");
+  const [destinationNuclei, setDestinationNuclei] = useState<
+    DestinationNucleus[]
+  >([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -144,6 +173,59 @@ export default function MembersTable({ refreshKey }: MembersTableProps) {
     setStatus("");
     setPage(0);
     setReloadKey((current) => current + 1);
+  }
+
+  async function handleRequestTransfer(member: Member) {
+    if (isPreparingTransfer !== null) {
+      return;
+    }
+
+    setTransferError("");
+    setTransferSuccess("");
+    setTransferTarget(null);
+    setDestinationNuclei([]);
+    setIsPreparingTransfer(member.id);
+
+    try {
+      const details = await memberService.getMemberById(member.id);
+
+      if (!details.nucleusId) {
+        throw new Error(
+          "Este militante não possui um Núcleo de origem válido.",
+        );
+      }
+
+      const nuclei = await nucleusService.listNuclei();
+
+      const availableNuclei = nuclei
+        .filter((nucleus) => nucleus.id !== details.nucleusId)
+        .map((nucleus) => ({
+          id: nucleus.id,
+          name: nucleus.name,
+        }));
+
+      if (availableNuclei.length === 0) {
+        throw new Error(
+          "Não existem outros Núcleos disponíveis para transferência.",
+        );
+      }
+
+      setDestinationNuclei(availableNuclei);
+      setTransferTarget({
+        memberId: details.id,
+        memberName: details.fullName,
+        originNucleusId: details.nucleusId,
+        originNucleusName: details.nucleusName || "Núcleo não identificado",
+      });
+    } catch (err) {
+      setTransferError(
+        err instanceof Error
+          ? err.message
+          : "Não foi possível preparar a transferência.",
+      );
+    } finally {
+      setIsPreparingTransfer(null);
+    }
   }
 
   const members = membersPage?.content ?? [];
@@ -222,6 +304,34 @@ export default function MembersTable({ refreshKey }: MembersTableProps) {
         </button>
       </form>
 
+      {transferSuccess && (
+        <div className="member-transfer-success" role="status">
+          <span>{transferSuccess}</span>
+
+          <button
+            type="button"
+            onClick={() => setTransferSuccess("")}
+            aria-label="Fechar notificação"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
+      {transferError && (
+        <div className="member-transfer-error" role="alert">
+          <span>{transferError}</span>
+
+          <button
+            type="button"
+            onClick={() => setTransferError("")}
+            aria-label="Fechar mensagem"
+          >
+            ×
+          </button>
+        </div>
+      )}
+
       {error && (
         <div className="users-table-error" role="alert">
           <p>{error}</p>
@@ -261,6 +371,7 @@ export default function MembersTable({ refreshKey }: MembersTableProps) {
                   <th scope="col">Núcleo</th>
                   <th scope="col">Admissão</th>
                   <th scope="col">Estado</th>
+                  <th scope="col">Acções</th>
                 </tr>
               </thead>
 
@@ -309,6 +420,28 @@ export default function MembersTable({ refreshKey }: MembersTableProps) {
                         <span className="member-no-status">—</span>
                       )}
                     </td>
+
+                    <td>
+                      {member.admissionStatus === "ADMITIDO" &&
+                      member.status === "ACTIVO" ? (
+                        <button
+                          type="button"
+                          className="member-transfer-button"
+                          onClick={() => {
+                            void handleRequestTransfer(member);
+                          }}
+                          disabled={isPreparingTransfer !== null}
+                          title={`Solicitar transferência de ${member.fullName}`}
+                        >
+                          <ArrowLeftRight size={16} />
+                          {isPreparingTransfer === member.id
+                            ? "A preparar..."
+                            : "Transferir"}
+                        </button>
+                      ) : (
+                        <span className="member-no-status">—</span>
+                      )}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -346,6 +479,27 @@ export default function MembersTable({ refreshKey }: MembersTableProps) {
         <MemberDetailsModal
           memberId={selectedMemberId}
           onClose={() => setSelectedMemberId(null)}
+        />
+      )}
+
+      {transferTarget && (
+        <RequestTransferModal
+          memberId={transferTarget.memberId}
+          memberName={transferTarget.memberName}
+          originNucleusId={transferTarget.originNucleusId}
+          originNucleusName={transferTarget.originNucleusName}
+          destinationNuclei={destinationNuclei}
+          onClose={() => setTransferTarget(null)}
+          onCreated={() => {
+            setTransferTarget(null);
+
+            setTransferSuccess(
+              "Pedido de transferência registado com sucesso. " +
+                "Aguardando decisão do órgão competente.",
+            );
+
+            setReloadKey((current) => current + 1);
+          }}
         />
       )}
     </section>

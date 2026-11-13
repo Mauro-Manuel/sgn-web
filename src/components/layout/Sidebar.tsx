@@ -9,6 +9,7 @@ import {
   LogOut,
   ShieldCheck,
   ScrollText,
+  ArrowLeftRight,
 } from "lucide-react";
 
 export type AppPage =
@@ -20,7 +21,9 @@ export type AppPage =
   | "nuclei"
   | "competent-bodies"
   | "body-authorizations"
-  | "audit";
+  | "audit"
+  | "transfers"
+  | "transfer-routing";
 
 interface SidebarProps {
   open: boolean;
@@ -69,8 +72,14 @@ export default function Sidebar({
       enabled: isSupervisor,
     },
     {
+      id: "transfers",
+      label: "Transferências",
+      Icon: ArrowLeftRight,
+      enabled: role === "SUPERVISOR_NUCLEO",
+    },
+    {
       id: "admissions",
-      label: "Admissões",
+      label: "Pedidos para Decisão",
       Icon: ClipboardList,
       enabled: isResponsible,
     },
@@ -102,6 +111,12 @@ export default function Sidebar({
       id: "users",
       label: "Utilizadores",
       Icon: UserCog,
+      enabled: isAdmin,
+    },
+    {
+      id: "transfer-routing",
+      label: "Encaminhamento",
+      Icon: Network,
       enabled: isAdmin,
     },
     {

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 import {
@@ -17,10 +16,13 @@ import UsersPage from "./UsersPage";
 import SettingsPage from "./settings/SettingsPage";
 import NucleiPage from "./NucleiPage";
 import MembersPage from "./MembersPage";
-import AdmissionsPage from "./AdmissionsPage";
+//import AdmissionsPage from "./AdmissionsPage";
+import DecisionsPage from "./DecisionsPage";
 import CompetentBodiesPage from "./CompetentBodiesPage";
 import BodyAuthorizationsPage from "./BodyAuthorizationsPage";
 import AuditPage from "./AuditPage";
+import TransfersPage from "./TransfersPage";
+import TransferRoutingPage from "./TransferRoutingPage";
 
 interface DashboardPageProps {
   name: string;
@@ -37,15 +39,13 @@ export default function DashboardPage({
   onLogout,
   isLoggingOut,
 }: DashboardPageProps) {
-  const [activePage, setActivePage] =
-    useState<AppPage>("dashboard");
+  const [activePage, setActivePage] = useState<AppPage>("dashboard");
 
   const isAdmin = role === "ADMIN";
   const isSupervisor = role === "SUPERVISOR_NUCLEO";
   const isResponsible = role === "RESPONSAVEL_ORGAO_BASE";
 
-  const canReadAudit =
-    isAdmin && permissions.includes("AUDIT_READ");
+  const canReadAudit = isAdmin && permissions.includes("AUDIT_READ");
 
   function canAccessPage(page: AppPage): boolean {
     switch (page) {
@@ -53,6 +53,9 @@ export default function DashboardPage({
         return true;
 
       case "militants":
+        return isSupervisor;
+
+      case "transfers":
         return isSupervisor;
 
       case "admissions":
@@ -63,6 +66,7 @@ export default function DashboardPage({
       case "nuclei":
       case "competent-bodies":
       case "body-authorizations":
+      case "transfer-routing":
         return isAdmin;
 
       case "audit":
@@ -81,9 +85,7 @@ export default function DashboardPage({
     setActivePage(page);
   }
 
-  const currentPage = canAccessPage(activePage)
-    ? activePage
-    : "dashboard";
+  const currentPage = canAccessPage(activePage) ? activePage : "dashboard";
 
   return (
     <AppLayout
@@ -104,20 +106,22 @@ export default function DashboardPage({
       ) : currentPage === "militants" ? (
         <MembersPage />
       ) : currentPage === "admissions" ? (
-        <AdmissionsPage />
+        <DecisionsPage />
       ) : currentPage === "competent-bodies" ? (
         <CompetentBodiesPage />
       ) : currentPage === "body-authorizations" ? (
         <BodyAuthorizationsPage />
       ) : currentPage === "audit" ? (
-        <AuditPage permissions={permissions}  />
+        <AuditPage permissions={permissions} />
+      ) : currentPage === "transfers" ? (
+        <TransfersPage />
+        ) : currentPage === "transfer-routing" ? (
+        <TransferRoutingPage />
       ) : (
         <>
           <div className="dashboard-heading">
             <h1>Dashboard</h1>
-            <p>
-              Visão geral do Sistema de Gestão de Núcleos
-            </p>
+            <p>Visão geral do Sistema de Gestão de Núcleos</p>
           </div>
 
           <div className="dashboard-stats">
@@ -153,17 +157,14 @@ export default function DashboardPage({
           <div className="dashboard-panels">
             <section className="dashboard-panel">
               <h2>Evolução de Militantes</h2>
-              <p>
-                O gráfico será apresentado após a integração
-                com a API.
-              </p>
+              <p>O gráfico será apresentado após a integração com a API.</p>
             </section>
 
             <section className="dashboard-panel">
               <h2>Militantes por Província</h2>
               <p>
-                Os dados serão apresentados conforme o âmbito
-                de acesso do utilizador.
+                Os dados serão apresentados conforme o âmbito de acesso do
+                utilizador.
               </p>
             </section>
           </div>
