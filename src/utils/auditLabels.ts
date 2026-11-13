@@ -1,13 +1,6 @@
+import type { AuditAction, AuditOutcome } from "../types/audit/AuditEvent";
 
-import type {
-  AuditAction,
-  AuditOutcome,
-} from "../types/audit/AuditEvent";
-
-export const AUDIT_ACTION_LABELS: Record<
-  AuditAction,
-  string
-> = {
+export const AUDIT_ACTION_LABELS: Record<AuditAction, string> = {
   LOGIN_SUCCESS: "Início de sessão",
   LOGIN_FAILURE: "Falha na autenticação",
   LOGOUT: "Fim de sessão",
@@ -26,6 +19,9 @@ export const AUDIT_ACTION_LABELS: Record<
   ADMISSION_DECIDED: "Decisão de admissão",
 
   TRANSFER_REQUESTED: "Transferência solicitada",
+
+  TRANSFER_COMPETENT_BODY_ASSIGNED: "Órgão competente designado",
+
   TRANSFER_DECIDED: "Decisão de transferência",
 
   NUCLEUS_CREATED: "Núcleo criado",
@@ -35,17 +31,13 @@ export const AUDIT_ACTION_LABELS: Record<
 
   ACCESS_DENIED: "Acesso recusado",
   SUPERVISOR_ASSIGNED: "Supervisor atribuído",
-  BODY_AUTHORIZATION_GRANTED:
-    "Autorização de órgão concedida",
+  BODY_AUTHORIZATION_GRANTED: "Autorização de órgão concedida",
 
   AUDIT_ACCESS_GRANTED: "Acesso à auditoria concedido",
   AUDIT_ACCESS_REVOKED: "Acesso à auditoria revogado",
 };
 
-export const AUDIT_OUTCOME_LABELS: Record<
-  AuditOutcome,
-  string
-> = {
+export const AUDIT_OUTCOME_LABELS: Record<AuditOutcome, string> = {
   SUCCESS: "Sucesso",
   FAILURE: "Falha",
 };

@@ -4881,3 +4881,801 @@ button:disabled {
     width: 100%;
   }
 }
+
+
+
+/* ========================================
+   SGN - SOLICITAÇÃO DE TRANSFERÊNCIA
+======================================== */
+
+.transfer-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.55);
+}
+
+.transfer-modal {
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
+}
+
+.transfer-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.transfer-modal-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #087a41;
+}
+
+.transfer-modal-heading h2 {
+  margin: 0 0 5px;
+  color: #17211e;
+  font-size: 21px;
+}
+
+.transfer-modal-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.transfer-modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #475569;
+  cursor: pointer;
+}
+
+.transfer-modal-close:hover:not(:disabled) {
+  background: #f1f5f9;
+}
+
+/* RESUMO DO MILITANTE */
+
+.transfer-member-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 18px;
+  border-radius: 12px;
+  background: #eff7f2;
+}
+
+.transfer-member-summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.transfer-member-summary span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.transfer-member-summary strong {
+  color: #17211e;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+/* CAMPOS */
+
+.transfer-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 20px;
+}
+
+.transfer-field label {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.transfer-field select,
+.transfer-field textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #fff;
+  color: #334155;
+  font: inherit;
+  font-size: 14px;
+}
+
+.transfer-field select {
+  min-height: 46px;
+}
+
+.transfer-field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.transfer-field select:focus,
+.transfer-field textarea:focus {
+  outline: none;
+  border-color: #087a41;
+  box-shadow: 0 0 0 3px rgba(8, 122, 65, 0.12);
+}
+
+/* INFORMAÇÃO */
+
+.transfer-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 9px;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.transfer-info svg {
+  flex-shrink: 0;
+}
+
+.transfer-info p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.transfer-error {
+  margin: 16px 0 0;
+  padding: 12px 14px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fef2f2;
+  color: #991b1b;
+  font-size: 13px;
+}
+
+/* BOTÕES */
+
+.transfer-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.transfer-modal-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.transfer-cancel-button {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #334155;
+}
+
+.transfer-submit-button {
+  border: 1px solid #087a41;
+  background: #087a41;
+  color: #fff;
+}
+
+.transfer-submit-button:hover:not(:disabled) {
+  background: #066b38;
+}
+
+.transfer-modal-actions button:disabled,
+.transfer-modal-close:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .transfer-modal {
+    padding: 20px;
+  }
+
+  .transfer-member-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .transfer-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .transfer-modal-actions button {
+    width: 100%;
+  }
+}
+
+
+/* ========================================
+   SGN - TRANSFERÊNCIAS NA TABELA
+======================================== */
+
+.member-transfer-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid #b7dfc8;
+  border-radius: 8px;
+  background: #eff8f2;
+  color: #087a41;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.member-transfer-button:hover:not(:disabled) {
+  background: #dff2e6;
+  border-color: #087a41;
+}
+
+.member-transfer-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.member-transfer-success,
+.member-transfer-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 18px 0;
+  padding: 14px 16px;
+  border-radius: 9px;
+  font-size: 13px;
+}
+
+.member-transfer-success {
+  border: 1px solid #bbebcf;
+  background: #edf9f1;
+  color: #17633b;
+}
+
+.member-transfer-error {
+  border: 1px solid #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.member-transfer-success button,
+.member-transfer-error button {
+  flex-shrink: 0;
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+
+/* ========================================
+   SGN - LISTAGEM DE TRANSFERÊNCIAS
+======================================== */
+
+.transfers-page {
+  width: 100%;
+  min-width: 0;
+}
+
+.transfers-card {
+  width: 100%;
+  margin-top: 24px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.transfers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.transfers-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #087a41;
+}
+
+.transfers-heading h3 {
+  margin: 0 0 6px;
+  color: #17211e;
+  font-size: 19px;
+}
+
+.transfers-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.transfers-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.transfers-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  width: min(300px, 100%);
+}
+
+.transfers-filter-field label {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.transfers-filter-field select {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #334155;
+  font: inherit;
+  font-size: 13px;
+}
+
+.transfers-filter-field select:focus {
+  outline: none;
+  border-color: #087a41;
+  box-shadow: 0 0 0 3px rgba(8, 122, 65, 0.12);
+}
+
+/* ESTADOS */
+
+.transfer-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.transfer-status-pending {
+  background: #fff4db;
+  color: #92400e;
+}
+
+.transfer-status-other {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* DETALHES */
+
+.transfer-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.transfer-details-grid > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.transfer-details-grid span {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.transfer-details-grid strong {
+  color: #17211e;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.transfer-details-grid p {
+  margin: 0;
+  color: #334155;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.transfer-details-full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 700px) {
+  .transfers-card {
+    padding: 18px;
+  }
+
+  .transfers-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .transfer-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .transfer-details-full {
+    grid-column: auto;
+  }
+}
+
+
+
+/* ========================================
+   SGN - DECISÃO DE TRANSFERÊNCIAS
+======================================== */
+
+.transfer-decision-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 26px;
+  padding: 20px;
+  border-radius: 12px;
+  background: #f7faf8;
+}
+
+.transfer-decision-summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.transfer-decision-summary span {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.transfer-decision-summary strong {
+  color: #17211e;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.transfer-decision-summary p {
+  margin: 0;
+  color: #334155;
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.transfer-decision-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.transfer-decision-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  background: #fff;
+  color: #475569;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.transfer-decision-approve.selected {
+  border-color: #087a41;
+  background: #e8f6ee;
+  color: #087a41;
+}
+
+.transfer-decision-reject.selected {
+  border-color: #b91c1c;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.transfer-decision-option:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .transfer-decision-summary,
+  .transfer-decision-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+.transfer-field input {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  background: #fff;
+  color: #334155;
+  font: inherit;
+  font-size: 14px;
+}
+
+.transfer-field input:focus {
+  outline: none;
+  border-color: #087a41;
+  box-shadow: 0 0 0 3px rgba(8, 122, 65, 0.12);
+}
+
+
+/* ========================================
+   SGN - PEDIDOS PARA DECISÃO
+======================================== */
+
+.decisions-page {
+  width: 100%;
+  min-width: 0;
+}
+
+.decisions-card {
+  width: 100%;
+  margin-top: 24px;
+  padding: 28px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.decisions-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.decisions-card-header h2 {
+  margin: 0 0 7px;
+  color: #17211e;
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.decisions-card-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.decisions-card-header > svg {
+  flex-shrink: 0;
+  color: #087a41;
+}
+
+/* SEPARADORES */
+
+.decisions-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.decisions-tab {
+  min-height: 52px;
+  padding: 12px 16px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: #64748b;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.decisions-tab:hover {
+  color: #087a41;
+  background: #f8fafc;
+}
+
+.decisions-tab.active {
+  color: #087a41;
+  border-bottom-color: #087a41;
+}
+
+.decisions-tab:focus-visible {
+  outline: 2px solid #087a41;
+  outline-offset: -2px;
+}
+
+.decisions-tab-content {
+  min-width: 0;
+}
+
+/* TRANSFERÊNCIAS PENDENTES */
+
+.pending-transfers {
+  min-width: 0;
+}
+
+.pending-transfers-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.pending-transfers-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #087a41;
+}
+
+.pending-transfers-heading h3 {
+  margin: 0 0 5px;
+  color: #17211e;
+  font-size: 17px;
+}
+
+.pending-transfers-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.pending-transfer-route {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: #334155;
+  font-size: 13px;
+}
+
+.pending-transfer-route > span:nth-child(2) {
+  color: #087a41;
+  font-weight: 700;
+}
+
+/* RESPONSIVIDADE */
+
+@media (max-width: 700px) {
+  .decisions-card {
+    padding: 18px;
+  }
+
+  .decisions-card-header {
+    margin-bottom: 16px;
+  }
+
+  .decisions-tab {
+    padding: 12px 8px;
+    font-size: 14px;
+  }
+
+  .pending-transfers-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* ========================================
+   SGN - ENCAMINHAMENTO DE TRANSFERÊNCIAS
+======================================== */
+
+.transfer-routing-page {
+  width: 100%;
+  min-width: 0;
+}
+
+.transfer-routing-card {
+  width: 100%;
+  margin-top: 24px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+.transfer-routing-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.transfer-routing-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: #087a41;
+}
+
+.transfer-routing-heading h3 {
+  margin: 0 0 6px;
+  color: #17211e;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.transfer-routing-heading p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+@media (max-width: 700px) {
+  .transfer-routing-card {
+    padding: 18px;
+  }
+
+  .transfer-routing-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
